@@ -1,0 +1,166 @@
+fileFormatVersion: 2
+guid: 72dde1378f4b1430e86efca979f79189
+timeCreated: 1457071376
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: achievement_item_0
+    21300002: achievement_item_1
+    21300004: achievement_item_2
+    21300006: achievement_item_3
+    21300008: achievement_item_4
+    21300010: achievement_item_5
+    21300012: achievement_item_6
+    21300014: achievement_item_7
+    21300016: achievement_item_8
+    21300018: achievement_item_9
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 512
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: achievement_item_0
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 357
+        width: 263
+        height: 254
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: achievement_item_1
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 357
+        width: 261
+        height: 254
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: achievement_item_2
+      rect:
+        serializedVersion: 2
+        x: 727
+        y: 357
+        width: 261
+        height: 254
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: achievement_item_3
+      rect:
+        serializedVersion: 2
+        x: 1087
+        y: 351
+        width: 261
+        height: 254
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: achievement_item_4
+      rect:
+        serializedVersion: 2
+        x: 1394
+        y: 351
+        width: 261
+        height: 254
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: achievement_item_5
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 67
+        width: 262
+        height: 254
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: achievement_item_6
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 67
+        width: 262
+        height: 254
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: achievement_item_7
+      rect:
+        serializedVersion: 2
+        x: 698
+        y: 67
+        width: 261
+        height: 254
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: achievement_item_8
+      rect:
+        serializedVersion: 2
+        x: 1057
+        y: 60
+        width: 261
+        height: 255
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: achievement_item_9
+      rect:
+        serializedVersion: 2
+        x: 1364
+        y: 60
+        width: 262
+        height: 255
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
