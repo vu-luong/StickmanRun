@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
 	public GameObject slash;
+	public GameObject superSlash;
 	public GameObject kunai;
 	public GameObject dragonSkill;
 	public GameObject chuongSkill;
@@ -138,11 +139,22 @@ public class PlayerController : MonoBehaviour {
 		Chay(speed, GetComponent<Rigidbody2D>().velocity.y);
 
 		grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
+		Collider2D col = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
+
+		if (col && col.tag == "Ground") {
+//			CameraController mainCam = FindObjectOfType<CameraController> ();
+//			float groundPositionY = col.gameObject.transform.position.y;
+//			mainCam.SetPositionY(groundPositionY + GameConst.DIS_GROUND_CAM);
+		}
+
 		GetComponent<Animator>().SetBool("Ground", grounded);
 
 		if (grounded) {
 			doubleJump = false;
 			currentPosition = this.transform.position;
+//			Debug.Log("Grounded");
+//			CameraController mainCam = FindObjectOfType<CameraController> ();
+//			mainCam.IsMovingCam = true;
 		}
 		GetComponent<Animator>().SetBool("DoubleJump", doubleJump);
 		float verY = GetComponent<Rigidbody2D>().velocity.y;
@@ -181,6 +193,8 @@ public class PlayerController : MonoBehaviour {
 
 	void GameOver () {
 		// TODO -- 
+		FindObjectOfType<CameraUpBGController>().ScrollSpeed = 0;
+
 		isGameOver = true;
 		gameOverCanvas.GetComponent<Animator>().SetBool("gameover", true);
 		Invoke("GoToGameOver", 5);
@@ -224,9 +238,14 @@ public class PlayerController : MonoBehaviour {
 		GetComponent<Animator>().SetBool("SwordAttack", true);
 
 		Vector3 offset = new Vector3(2.5f, 0, 0);
-		GameObject sl = Instantiate(slash, transform.position + offset, Quaternion.identity) as GameObject;
-		sl.transform.parent = transform;
 
+		if (ItemData.IsUpgradedSlash) {
+			GameObject sl = Instantiate(superSlash, transform.position + offset, Quaternion.identity) as GameObject;
+			sl.transform.parent = transform;
+		} else {
+			GameObject sl = Instantiate(slash, transform.position + offset, Quaternion.identity) as GameObject;
+			sl.transform.parent = transform;
+		}
 		//Invoke("FinishChem", 0.9f);
 	}
 
@@ -305,6 +324,8 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public Vector3 GetOffsetWithCurrent() {
+//		Debug.Log("OffsetWithCurrent: " + (transform.position - currentPosition));
+
 		return transform.position - currentPosition;
 	}
 

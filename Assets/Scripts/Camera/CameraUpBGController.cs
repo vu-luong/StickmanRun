@@ -23,7 +23,14 @@ public class CameraUpBGController : MonoBehaviour {
 		if (offsetY < 0) offsetY = 0; //Truong hop player bi roi xuong vuc
 
 		transform.position = transform.position + new Vector3(0, offsetY / 10, 0);
-
 	}
-
+	
+	public float ScrollSpeed {
+		get {
+			return scrollSpeed;
+		}
+		set {
+			scrollSpeed = value;
+		}
+	}
 }

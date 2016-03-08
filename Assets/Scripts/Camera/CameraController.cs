@@ -33,7 +33,6 @@ public class CameraController : MonoBehaviour {
 
 
 	void Update () {
-
 		if (followSpecial == 1) FollowSpecialPlayer();
 		else if (followSpecial == 2) FinishSpecial();
 		else 
@@ -44,16 +43,22 @@ public class CameraController : MonoBehaviour {
 	}
 
 	void FollowPlayer() {
-		float offsetY = FindObjectOfType<PlayerController>().GetOffsetWithCurrent().y;
-		if (offsetY < 0) offsetY = 0; //Truong hop player bi roi xuong vuc
-//		Debug.Log(Mathf.Abs(positionY - oldPositionY));
-		if (Mathf.Abs(positionY - oldPositionY) > float.Epsilon) {
+		if (FindObjectOfType<PlayerController>().isDead) return;
 
+		float offsetY = FindObjectOfType<PlayerController>().GetOffsetWithCurrent().y;
+//		Debug.Log("offsetY " + offsetY);
+
+		if (offsetY < 0) offsetY = 0; //Truong hop player bi roi xuong vuc
+//		Debug.Log(Mathf.Abs(positionY - oldPositionY)); 
+		if (Mathf.Abs(positionY - oldPositionY) > 0.1) {
+			//1
 			if (oldPositionY < positionY) oldPositionY += Time.deltaTime;
 			else oldPositionY -= Time.deltaTime;
 
 			transform.position = new Vector3(player.transform.position.x + 5.5f, oldPositionY + offsetY / 5, transform.position.z);
 		} else {
+			//2
+//			canSetMovingCam = false;
 			transform.position = new Vector3(player.transform.position.x + 5.5f, positionY + offsetY / 5, transform.position.z);
 		}
 	}

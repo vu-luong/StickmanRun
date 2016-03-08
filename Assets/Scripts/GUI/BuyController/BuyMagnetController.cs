@@ -29,7 +29,7 @@ public class BuyMagnetController : BuyController {
 	#region implemented abstract members of BuyController
 
 	protected override void BuyCompleted () {
-		ItemData.AddTimeMagnet(5.0f);
+		ItemData.AddTimeMagnet(15.0f);
 		DataPref.addNumData(GameConst.NUM_COLLECT_KEY, -GameConst.MAGNET_COST);
 	}
 

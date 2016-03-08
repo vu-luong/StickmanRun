@@ -8,6 +8,7 @@ public class Boss1Controller : Enemy {
 	public GameObject[] chuongs;
 
 	protected override void InitHP () {
+		Debug.Log ("den day roi");
 		HP = 200;
 	}
 
@@ -20,6 +21,7 @@ public class Boss1Controller : Enemy {
 	}
 
 	void Start() {
+		base.Start();
 		UseChuong();
 	}
 

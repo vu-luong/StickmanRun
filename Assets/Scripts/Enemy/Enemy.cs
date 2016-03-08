@@ -11,7 +11,7 @@ public abstract class Enemy : MonoBehaviour {
 	protected abstract void InitSpeed();
 	protected abstract void InitHP();
 
-	void Start () {
+	public void Start () {
 		isDead = false;
 		attackedPlayer = false;
 		InitSpeed();
@@ -50,15 +50,13 @@ public abstract class Enemy : MonoBehaviour {
 			HP -= GetPlayerPower(tag);
 			if (HP <= 0) GetComponent<Animator>().SetBool("Die", true);
 		}
-		
+
 		if (tag == "PlayerKunai") {
 			Destroy(col.gameObject);
 			HP -= GetPlayerPower(tag);
 			if (HP <= 0) GetComponent<Animator>().SetBool("Die", true);
 		}
 
-
-		if (this.tag == "Boss1") Debug.Log("Trigger with boss 1");
 	}
 
 	private int GetPlayerPower(string tag) {

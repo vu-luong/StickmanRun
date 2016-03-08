@@ -36,6 +36,7 @@ public class GameStateManager : MonoBehaviour {
 	}
 
 	public void GoToGameOver() {
+		ItemData.ResetCount();
 		Application.LoadLevel("GameOver");
 	}
 

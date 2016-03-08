@@ -12,6 +12,17 @@ public abstract class Collectible : MonoBehaviour {
 		player = FindObjectOfType<PlayerController>();
 	}
 
+	void Update() {
+		if (Vector2.Distance(transform.position, player.transform.position) > 10) return;
+
+		if (ItemData.TimeMagnetCount > 0) {
+			float step = 20.0f * Time.deltaTime;
+			transform.position = Vector3.MoveTowards(transform.position, player.transform.position, step);
+			ItemData.AddTimeMagnet(-Time.deltaTime);
+			Debug.Log(ItemData.TimeMagnetCount);
+		}
+	}
+
 	protected abstract void InitBarAndType();
 
 	void OnTriggerEnter2D(Collider2D other) {

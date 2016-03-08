@@ -82,6 +82,7 @@ public class ItemData : MonoBehaviour {
 
 	public static void AddTimeMagnet(float num) {
 		timeMagnetCount += num;
+		if (timeMagnetCount < 0)timeMagnetCount = 0;
 	}
 
 	public static void ResetCount() {
@@ -90,6 +91,6 @@ public class ItemData : MonoBehaviour {
 		chuongCount = 0;
 		upCount = 0;
 		timeMagnetCount = 0;
+		isUpgradedSlash = false;
 	}
-
 }
