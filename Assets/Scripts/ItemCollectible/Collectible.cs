@@ -18,8 +18,6 @@ public abstract class Collectible : MonoBehaviour {
 		if (ItemData.TimeMagnetCount > 0) {
 			float step = 20.0f * Time.deltaTime;
 			transform.position = Vector3.MoveTowards(transform.position, player.transform.position, step);
-			ItemData.AddTimeMagnet(-Time.deltaTime);
-			Debug.Log(ItemData.TimeMagnetCount);
 		}
 	}
 

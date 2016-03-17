@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyWalkFormation : MonoBehaviour {
+public class EnemyFormation : MonoBehaviour {
 
 	public GameObject enemy;
 	public GameObject enemy2;

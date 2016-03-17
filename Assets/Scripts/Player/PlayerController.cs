@@ -110,7 +110,9 @@ public class PlayerController : MonoBehaviour {
 			DataPref.addNumData(GameConst.NUM_COLLECT_KEY, 30);
 		}
 	
-		//if (!grounded) Debug.Log(GetComponent<Rigidbody2D>().velocity);
+		if (ItemData.TimeMagnetCount > 0) {
+			ItemData.AddTimeMagnet(-Time.deltaTime);
+		}
 
 	}
 
@@ -135,26 +137,16 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 
-		if (GetComponent<Animator>().GetBool("Die")) Chay (0, 0); else
+		if (GetComponent<Animator>().GetInteger("Died") != 0) Chay (0, 0); else
 		Chay(speed, GetComponent<Rigidbody2D>().velocity.y);
 
 		grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
-		Collider2D col = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
-
-		if (col && col.tag == "Ground") {
-//			CameraController mainCam = FindObjectOfType<CameraController> ();
-//			float groundPositionY = col.gameObject.transform.position.y;
-//			mainCam.SetPositionY(groundPositionY + GameConst.DIS_GROUND_CAM);
-		}
 
 		GetComponent<Animator>().SetBool("Ground", grounded);
 
 		if (grounded) {
 			doubleJump = false;
 			currentPosition = this.transform.position;
-//			Debug.Log("Grounded");
-//			CameraController mainCam = FindObjectOfType<CameraController> ();
-//			mainCam.IsMovingCam = true;
 		}
 		GetComponent<Animator>().SetBool("DoubleJump", doubleJump);
 		float verY = GetComponent<Rigidbody2D>().velocity.y;
@@ -179,7 +171,7 @@ public class PlayerController : MonoBehaviour {
 
 			GetComponent<SpriteRenderer>().enabled = true;
 			GetComponent<Collider2D>().enabled = true;
-			GetComponent<Animator>().SetBool("Die", false);
+			GetComponent<Animator>().SetInteger("Died", 0);
 			GetComponent<Animator>().SetBool("Reborn", true);
 			HPController hpObject = FindObjectOfType<HPController>();
 			hpObject.IncreaseProcess(100);
@@ -235,7 +227,8 @@ public class PlayerController : MonoBehaviour {
 	public void Chem() {
 		if (special) return;
 
-		GetComponent<Animator>().SetBool("SwordAttack", true);
+//		GetComponent<Animator>().SetBool("SwordAttack", true);
+		GetComponent<Animator>().SetTrigger("SwordAttack");
 
 		Vector3 offset = new Vector3(2.5f, 0, 0);
 
@@ -265,7 +258,7 @@ public class PlayerController : MonoBehaviour {
 		GetComponent<Animator>().SetBool("SurikenAttack", true);
 		ItemData.AddSuriken(-1);
 
-		Vector3 offset = new Vector3(1, 0, 0);
+		Vector3 offset = new Vector3(0.7f, 1f, 0);
 		GameObject phitieu = Instantiate(kunai, transform.position + offset, Quaternion.identity) as GameObject;
 
 		phitieu.GetComponent<Rigidbody2D>().velocity = new Vector3(kunaiSpeed, 0, 0);
@@ -342,7 +335,11 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void OutOfHP() {
-		GetComponent<Animator>().SetBool("Die", true);
+//		Debug.Log("Grounded:" + grounded);
+		if (grounded) GetComponent<Animator>().SetInteger("Died", 1);
+		else GetComponent<Animator>().SetInteger("Died", 2);
+
+//		GetComponent<Animator>().SetBool("Ground", grounded);
 //		Debug.Log(GetComponent<Animator>().GetBool("Die"));
 	}
 

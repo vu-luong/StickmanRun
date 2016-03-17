@@ -20,7 +20,7 @@ public class GameConst : MonoBehaviour {
 	public static string NUM_DRAGON_SKILL_KEY = "num_dragon";
 
 	public static float PLAYER_SPEED = 10f;
-	public static float PLAYER_JUMP_HEIGHT = 17f;
+	public static float PLAYER_JUMP_HEIGHT = 14f;
 	public static float KUNAI_SPEED = 20f;
 	public static float DRAGON_SPEED = 20f;
 	public static float ENEMY_WALK_SPEED = 3f;

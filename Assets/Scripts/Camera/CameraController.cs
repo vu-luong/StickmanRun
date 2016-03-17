@@ -9,6 +9,8 @@ public class CameraController : MonoBehaviour {
 	private float oldPositionY;
 	private bool canSetPositionY;
 
+	private float DIS_PLAYER_CAM = 3.5f;
+
 	public int followSpecial = 0;
 
 	void Start() {
@@ -55,11 +57,11 @@ public class CameraController : MonoBehaviour {
 			if (oldPositionY < positionY) oldPositionY += Time.deltaTime;
 			else oldPositionY -= Time.deltaTime;
 
-			transform.position = new Vector3(player.transform.position.x + 5.5f, oldPositionY + offsetY / 5, transform.position.z);
+			transform.position = new Vector3(player.transform.position.x + DIS_PLAYER_CAM, oldPositionY + offsetY / 2, transform.position.z);
 		} else {
 			//2
 //			canSetMovingCam = false;
-			transform.position = new Vector3(player.transform.position.x + 5.5f, positionY + offsetY / 5, transform.position.z);
+			transform.position = new Vector3(player.transform.position.x + DIS_PLAYER_CAM, positionY + offsetY / 2, transform.position.z);
 		}
 	}
 
@@ -74,11 +76,11 @@ public class CameraController : MonoBehaviour {
 	}
 
 	void FinishSpecial() {
-		if (transform.position.x - player.transform.position.x < 5.5f) 
+		if (transform.position.x - player.transform.position.x < DIS_PLAYER_CAM) 
 			transform.position = new Vector3(transform.position.x + Time.deltaTime*20, transform.position.y, transform.position.z);
 		else 
 		{
-			transform.position = new Vector3(player.transform.position.x + 5.5f, transform.position.y, transform.position.z);
+			transform.position = new Vector3(player.transform.position.x + DIS_PLAYER_CAM, transform.position.y, transform.position.z);
 			followSpecial = 0;
 			player.GetComponent<PlayerController>().afterFinishSpecialSkill();
 		}
@@ -89,7 +91,9 @@ public class CameraController : MonoBehaviour {
 	}
 
 	void updateDistance(float dis) {
+		dis = dis * 3;
 		FindObjectOfType<DistanceController>().updateDistance(dis);
+		FindObjectOfType<GameBalance>().SetDistance(dis);
 	}
 
 	public void updatePosition(float offset) {

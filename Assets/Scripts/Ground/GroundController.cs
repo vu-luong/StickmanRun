@@ -6,6 +6,8 @@ public class GroundController : MonoBehaviour {
 	private int numberOfTiles;
 	private float tileWidth;
 	public GameObject groundTile;
+	public GameObject groundTileStart;
+	public GameObject groundTileEnd;
 	public GameObject groundChong;
 	public GameObject groundFormation;
 	public GameObject chong1;
@@ -29,15 +31,19 @@ public class GroundController : MonoBehaviour {
 		int r = Random.Range(2, numberOfTiles - 1);
 
 		for (int i = 1; i <= numberOfTiles; i++) {
-			if (i != r) {
-				Vector3 offset = new Vector3((i - 1) * tileWidth, 0, 0);
-				GameObject groundTileObject = Instantiate(groundTile, transform.position + offset, Quaternion.identity) as GameObject;
-				groundTileObject.transform.parent = transform;
+			Vector3 offset = new Vector3((i - 1) * tileWidth, 0, 0);
+			GameObject groundTileObject;
+			if (i == 1) {
+				groundTileObject = Instantiate(groundTileStart, transform.position + offset, Quaternion.identity) as GameObject;
+			} else if (i == numberOfTiles) {
+				groundTileObject = Instantiate(groundTileEnd, transform.position + offset, Quaternion.identity) as GameObject;
+			} else if (i != r) {
+				groundTileObject = Instantiate(groundTile, transform.position + offset, Quaternion.identity) as GameObject;
 			} else {
-				Vector3 offset = new Vector3((i - 1) * tileWidth, 0, 0);
-				GameObject groundTileObject = Instantiate(groundChong, transform.position + offset, Quaternion.identity) as GameObject;
-				groundTileObject.transform.parent = transform;
+				groundTileObject = Instantiate(groundChong, transform.position + offset, Quaternion.identity) as GameObject;
 			}
+
+			groundTileObject.transform.parent = transform;
 
 		}
 

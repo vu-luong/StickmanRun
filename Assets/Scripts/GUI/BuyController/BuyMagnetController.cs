@@ -19,7 +19,8 @@ public class BuyMagnetController : BuyController {
 	void Update () {
 		//		image.SetActive(true);
 		
-		if (DataPref.getNumData(GameConst.NUM_COLLECT_KEY) < GameConst.MAGNET_COST) {
+		if (DataPref.getNumData(GameConst.NUM_COLLECT_KEY) < GameConst.MAGNET_COST
+		    || ItemData.TimeMagnetCount > 0) {
 			image.SetActive(true);
 		} else {
 			image.SetActive(false);

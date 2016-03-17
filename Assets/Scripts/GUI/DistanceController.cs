@@ -16,7 +16,6 @@ public class DistanceController : MonoBehaviour {
 	}
 
 	public void updateDistance(float dis) {
-		dis = dis * 3;
 		this.GetComponent<Text>().text = (int)dis + "";
 		runDistance = (int) dis;
 	}
