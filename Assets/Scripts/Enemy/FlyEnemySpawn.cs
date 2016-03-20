@@ -4,6 +4,7 @@ using System.Collections;
 public class FlyEnemySpawn : MonoBehaviour {
 
 	public GameObject flyEnemy;
+	public GameObject flyEnemySpawn;
 
 	// Use this for initialization
 	void Start () {

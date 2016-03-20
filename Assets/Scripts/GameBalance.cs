@@ -2,13 +2,38 @@
 using System.Collections;
 
 public class GameBalance : MonoBehaviour {
-	public float distance;
+	public GameObject flyEnemySpawn;
+	public GameObject walkEnemySpawn;
 
+
+	public float distance;
 	private bool notGenBoss = true;
+	private float timeSpawnFlyEnemy, timeSpawnWalkEnemy;
+	private Vector3 offsetFlyEnemySpawn;
+	private Vector3 offsetWalkEnemySpawn;
 
 	// Use this for initialization
 	void Start () {
 		notGenBoss = true;
+		offsetFlyEnemySpawn = new Vector3(5, 3, 0);
+		offsetWalkEnemySpawn = new Vector3(5, -1, 0);
+	}
+
+	void Update() {
+		timeSpawnFlyEnemy = timeSpawnFlyEnemy + Time.deltaTime;
+		timeSpawnWalkEnemy = timeSpawnWalkEnemy + Time.deltaTime;
+
+		if (timeSpawnFlyEnemy > 2) {
+//			Debug.Log("Den day roi");
+			Instantiate(flyEnemySpawn, transform.position + offsetFlyEnemySpawn, Quaternion.identity);
+			timeSpawnFlyEnemy = 0;
+		}
+
+		if (timeSpawnWalkEnemy > 2.5f) {
+			Instantiate(walkEnemySpawn, transform.position + offsetWalkEnemySpawn, Quaternion.identity);
+			timeSpawnWalkEnemy = 0;
+		}
+
 	}
 
 	public void SetDistance (float distance) {
