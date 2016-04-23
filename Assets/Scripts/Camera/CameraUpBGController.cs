@@ -16,6 +16,8 @@ public class CameraUpBGController : MonoBehaviour {
 	}
 	
 	void Update (){
+		if (Mathf.Abs(scrollSpeed) < float.Epsilon) return;
+
 		float newPosition = Mathf.Repeat(Time.time * scrollSpeed, tileSizeZ);
 		transform.position = startPosition + Vector3.right * newPosition;
 

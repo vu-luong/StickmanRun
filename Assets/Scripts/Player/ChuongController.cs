@@ -12,7 +12,7 @@ public class ChuongController : MonoBehaviour {
 	void Update () {
 		GameObject player = GameObject.FindGameObjectWithTag("Player") as GameObject;
 
-		Vector3 offset = new Vector3(0.5f, 0, 0);
+		Vector3 offset = new Vector3(GameConst.CHUONG_OFFSET_X, GameConst.CHUONG_OFFSET_Y, 0);
 		this.transform.position = player.transform.position + offset;
 
 		if (isOut) Destroy(gameObject);

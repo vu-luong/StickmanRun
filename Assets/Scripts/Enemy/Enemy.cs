@@ -11,17 +11,20 @@ public abstract class Enemy : MonoBehaviour {
 	protected abstract void InitSpeed();
 	protected abstract void InitHP();
 
-	public void Start () {
+	private GameObject temp;
+
+	protected virtual void Start () {
 		isDead = false;
 		attackedPlayer = false;
 		InitSpeed();
 		InitHP();
 	}
 
-	void Update () {
+	protected virtual void Update () {
 		if (isDead) Destroy(gameObject);
 		
 		if (isAttackingPlayer() && attackedPlayer == false && GetComponent<Animator>().GetBool("Die") == false) {
+			Debug.Log("attackkkkk!");
 			FindObjectOfType<PlayerController>().beAttacked(20);
 			attackedPlayer = true;
 		}
@@ -40,32 +43,45 @@ public abstract class Enemy : MonoBehaviour {
 		return enemyBound.Intersects(playerBound);
 	}
 
-	void OnTriggerEnter2D(Collider2D col) {
+	protected virtual void OnTriggerEnter2D(Collider2D col) {
 		if (GetComponent<Animator>().GetBool("Die")) return;
-
 		string tag = col.gameObject.tag;
 
-		if (tag == "PlayerSlash" || tag == "Dragon" || tag == "Chuong"
-		    || tag == "PlayerBigKunai" || tag == "PlayerBigSlash" || tag == "PlayerSpecial") {
-			HP -= GetPlayerPower(tag);
-			if (HP <= 0) GetComponent<Animator>().SetBool("Die", true);
-		}
+		// _tagname: tag after trigger, to avoid trigger with an obj twice;
 
+		if (tag == "Dragon" || tag == "Chuong"
+		    || tag == "PlayerBigKunai" || tag == "PlayerBigSlash"
+			|| tag == "_PlayerBigKunai" || tag == "_PlayerBigSlash"
+			|| tag == "_Dragon" || tag == "_Chuong") {
+			HP -= GetPlayerPower(tag);
+			if (tag[0] != '_' && gameObject.tag == "Boss1") col.gameObject.tag = "_" + tag;
+
+			if (gameObject.tag == "Boss1") Debug.Log("aaaaa");
+
+		} else
+			
+		if (tag == "PlayerSlash" || tag == "PlayerSpecial") {
+			HP -= GetPlayerPower(tag);
+		} else
 		if (tag == "PlayerKunai") {
 			Destroy(col.gameObject);
 			HP -= GetPlayerPower(tag);
-			if (HP <= 0) GetComponent<Animator>().SetBool("Die", true);
+		}
+
+		if (HP <= 0) {
+			GetComponent<Animator>().SetBool("Die", true);
+			if (GetComponent<Rigidbody2D>() != null) GetComponent<Rigidbody2D>().gravityScale = 1;
 		}
 
 	}
 
 	private int GetPlayerPower(string tag) {
 		if (tag == "PlayerSlash") return GameConst.PLAYER_SLASH_POWER;
-		if (tag == "Dragon") return GameConst.PLAYER_DRAGON_POWER;
-		if (tag == "Chuong") return GameConst.PLAYER_CHUONG_POWER;
+		if (tag == "Dragon" || tag == "_Dragon") return GameConst.PLAYER_DRAGON_POWER;
+		if (tag == "Chuong" || tag == "_Chuong") return GameConst.PLAYER_CHUONG_POWER;
 		if (tag == "PlayerKunai") return GameConst.PLAYER_KUNAI_POWER;
-		if (tag == "PlayerBigKunai") return GameConst.PLAYER_BIG_KUNAI_POWER;
-		if (tag == "PlayerBigSlash") return GameConst.PLAYER_BIG_KUNAI_POWER;
+		if (tag == "PlayerBigKunai" || tag == "_PlayerBigKunai") return GameConst.PLAYER_BIG_KUNAI_POWER;
+		if (tag == "PlayerBigSlash" || tag == "_PlayerBigSlash") return GameConst.PLAYER_BIG_KUNAI_POWER;
 		if (tag == "PlayerSpecial") return GameConst.PLAYER_SPECIAL_POWER;
 		return 10;
 	}

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameOverStateManager : MonoBehaviour {
 
@@ -8,6 +9,6 @@ public class GameOverStateManager : MonoBehaviour {
 	}
 
 	public void gotoPlayScene() {
-		Application.LoadLevel("Play");
+		SceneManager.LoadScene("Play");
 	}
 }

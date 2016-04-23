@@ -12,7 +12,6 @@ public class BossFormation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
 	}
 
 	void OnDrawGizmos() {
@@ -20,7 +19,7 @@ public class BossFormation : MonoBehaviour {
 	}
 
 	public void BossAppear() {
-		GameObject bossObj = Instantiate(boss, Vector3.zero, Quaternion.identity) as GameObject;
-		bossObj.transform.parent = transform;
+		GameObject bossObj = Instantiate(boss, new Vector3(3.49f, -2.05f, 1), Quaternion.identity) as GameObject;
+		bossObj.transform.parent = transform.parent;
 	}
 }

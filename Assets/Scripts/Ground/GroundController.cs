@@ -55,8 +55,8 @@ public class GroundController : MonoBehaviour {
 	void SpawnFormation() {
 		int rand = Random.Range(1, 3);
 		float y = 0;
-		if (rand == 1) y = 1;
-		else if (rand == 2) y = -1;
+//		if (rand == 1) y = 1;
+//		else if (rand == 2) y = -1;
 
 		Vector3 offset = new Vector3((numberOfTiles + 1) * tileWidth, y, 0);
 		GameObject groundFormationObject = Instantiate(groundFormation, transform.position + offset, Quaternion.identity) as GameObject;

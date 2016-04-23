@@ -20,18 +20,31 @@ public class Boss1Controller : Enemy {
 //		GetComponent<Rigidbody2D>().velocity = new Vector2(- speed, GetComponent<Rigidbody2D>().velocity.y);
 	}
 
-	void Start() {
+	protected override void Start() {
 		base.Start();
 		UseChuong();
 	}
 
-	void Update() {
-
-	}
+//	void Update() {
+//
+//	}
 
 	public void UseChuong() {
-		Instantiate(chuongs[Random.Range(0, chuongs.Length)], transform.position, Quaternion.identity);
-		Invoke("UseChuong", 1.0f);
+		GetComponent<Animator>().SetTrigger("Chuong");
+		Vector3 offset = new Vector3(2, 2.2f, 0);
+		Instantiate(chuongs[Random.Range(0, chuongs.Length)], transform.position + offset, Quaternion.identity);
+		Invoke("UseChuong", 2.5f);
+	}
+
+	protected override void OnTriggerEnter2D(Collider2D col) {
+//		Debug.Log("Chuong trung roi" + col.gameObject.tag);
+		string tag = col.gameObject.tag;
+		if (tag == "_PlayerBigKunai" || tag == "_PlayerBigSlash"
+			|| tag == "_Dragon" || tag == "_Chuong") {
+			Debug.Log("da trigger roi");
+			return;
+		}
+		base.OnTriggerEnter2D(col);
 	}
 
 }

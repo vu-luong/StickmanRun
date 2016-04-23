@@ -19,7 +19,7 @@ public class GameConst : MonoBehaviour {
 
 	public static string NUM_DRAGON_SKILL_KEY = "num_dragon";
 
-	public static float PLAYER_SPEED = 10f;
+	public static float PLAYER_SPEED = 7f;
 	public static float PLAYER_JUMP_HEIGHT = 14f;
 	public static float KUNAI_SPEED = 20f;
 	public static float DRAGON_SPEED = 20f;
@@ -43,5 +43,13 @@ public class GameConst : MonoBehaviour {
 	public static float TIME_HOLD_BIG_KUNAI = 0.4f;
 	public static float TIME_HOLD_BIG_SLASH = 1.2f;
 
+	public static float CHUONG_OFFSET_X = -0.2f;
+	public static float CHUONG_OFFSET_Y = 1.3f;
+
+	public static int TIME_INC_ANIM = 45;
+
+	public static string MUSIC_KEY = "music key";
+	public static string SOUND_KEY = "sound key";
+	public static string VIBRATE_KEY = "vibrate key";
 
 }

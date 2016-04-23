@@ -39,14 +39,19 @@ public class PlayerController : MonoBehaviour {
 	public bool finishedSuriken;
 
 	public bool isDead;
+	public bool isChem1;
+	public bool isChem2;
+	public bool isChem3;
 
 	bool isGameOver;
+
+	private Animator animator;
 
 	// Use this for initialization
 	void Start () {
 		timeButtonHolding = 0;
 		ButtonHolding = false;
-		circleEffect = Instantiate(circleEffectPrefab, transform.position + new Vector3(0, 0, -1), Quaternion.identity) as GameObject;
+		circleEffect = Instantiate(circleEffectPrefab, transform.position + new Vector3(0, 1.2f, -1), Quaternion.identity) as GameObject;
 		circleEffect.transform.parent = this.transform;
 		circleEffect.SetActive(false);
 //		Debug.Log (GetComponent<Rigidbody2D>().gravityScale);
@@ -57,6 +62,7 @@ public class PlayerController : MonoBehaviour {
 
 		isDead = false;
 		isGameOver = false;
+		animator = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -123,7 +129,7 @@ public class PlayerController : MonoBehaviour {
 			Reborn();
 			return;
 		} else {
-			GetComponent<Animator>().SetBool("Reborn", false);
+			animator.SetBool("Reborn", false);
 		}
 
 		if (upDown) {
@@ -137,20 +143,20 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 
-		if (GetComponent<Animator>().GetInteger("Died") != 0) Chay (0, 0); else
+		if (animator.GetInteger("Died") != 0) Chay (0, 0); else
 		Chay(speed, GetComponent<Rigidbody2D>().velocity.y);
 
 		grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
 
-		GetComponent<Animator>().SetBool("Ground", grounded);
+		animator.SetBool("Ground", grounded);
 
 		if (grounded) {
 			doubleJump = false;
 			currentPosition = this.transform.position;
 		}
-		GetComponent<Animator>().SetBool("DoubleJump", doubleJump);
+		animator.SetBool("DoubleJump", doubleJump);
 		float verY = GetComponent<Rigidbody2D>().velocity.y;
-		GetComponent<Animator>().SetFloat("verY", verY);
+		animator.SetFloat("verY", verY);
 
 		if (finishedChem) {
 			FinishChem();
@@ -167,12 +173,14 @@ public class PlayerController : MonoBehaviour {
 			Debug.Log ("rebornnnn");
 
 			CameraController mainCam = FindObjectOfType<CameraController> ();
-			transform.position = new Vector3(transform.position.x, mainCam.transform.position.y + 3, transform.position.z);
+			if (!grounded)
+				transform.position = new Vector3(transform.position.x, mainCam.transform.position.y + 3, transform.position.z);
+			
 
 			GetComponent<SpriteRenderer>().enabled = true;
 			GetComponent<Collider2D>().enabled = true;
-			GetComponent<Animator>().SetInteger("Died", 0);
-			GetComponent<Animator>().SetBool("Reborn", true);
+			animator.SetInteger("Died", 0);
+			animator.SetBool("Reborn", true);
 			HPController hpObject = FindObjectOfType<HPController>();
 			hpObject.IncreaseProcess(100);
 			isDead = false;
@@ -186,6 +194,7 @@ public class PlayerController : MonoBehaviour {
 	void GameOver () {
 		// TODO -- 
 		FindObjectOfType<CameraUpBGController>().ScrollSpeed = 0;
+		FindObjectOfType<CameraFrontBGController>().ScrollSpeed = 0;
 
 		isGameOver = true;
 		gameOverCanvas.GetComponent<Animator>().SetBool("gameover", true);
@@ -226,28 +235,43 @@ public class PlayerController : MonoBehaviour {
 
 	public void Chem() {
 		if (special) return;
+		Debug.Log(isChem1 + " " + isChem2);
 
-//		GetComponent<Animator>().SetBool("SwordAttack", true);
-		GetComponent<Animator>().SetTrigger("SwordAttack");
-
-		Vector3 offset = new Vector3(2.5f, 0, 0);
-
-		if (ItemData.IsUpgradedSlash) {
-			GameObject sl = Instantiate(superSlash, transform.position + offset, Quaternion.identity) as GameObject;
-			sl.transform.parent = transform;
-		} else {
-			GameObject sl = Instantiate(slash, transform.position + offset, Quaternion.identity) as GameObject;
-			sl.transform.parent = transform;
+//		animator.SetBool("SwordAttack", true);
+		if (!isChem1 && !isChem2) {
+			animator.SetTrigger("SwordAttack");
+			animator.SetBool("Return1", true);
+		} else if (isChem1 && !isChem2) {
+			animator.SetTrigger("SwordAttack2");
+			animator.SetBool("Return1", false);
+			animator.SetBool("Return2", true);
+			Debug.Log("Dang chem 1 ma bam F");
+		} else if (isChem2) {
+			Debug.Log("Den day roi");
+			animator.SetTrigger("SwordAttack3");
+			animator.SetBool("Return2", false);
+			animator.SetBool("Return1", false);
+			animator.SetBool("Return3", true);
 		}
+
+//		Vector3 offset = new Vector3(2.5f, 0, 0);
+
+//		if (ItemData.IsUpgradedSlash) {
+//			GameObject sl = Instantiate(superSlash, transform.position + offset, Quaternion.identity) as GameObject;
+//			sl.transform.parent = transform;
+//		} else {
+//			GameObject sl = Instantiate(slash, transform.position + offset, Quaternion.identity) as GameObject;
+//			sl.transform.parent = transform;
+//		}
 		//Invoke("FinishChem", 0.9f);
 	}
 
 	void FinishChem() {
-		GetComponent<Animator>().SetBool("SwordAttack", false);
+//		animator.SetBool("FinishChem", true);
 	}
 
 	void FinishSuriken() {
-		GetComponent<Animator>().SetBool("SurikenAttack", false);
+		animator.SetBool("SurikenAttack", false);
 	}
 
 	public void LaunchKunai() {
@@ -255,7 +279,8 @@ public class PlayerController : MonoBehaviour {
 		if (special) return;
 		if (ItemData.SurikenCount <= 0) return;
 
-		GetComponent<Animator>().SetBool("SurikenAttack", true);
+		if (grounded) animator.SetTrigger("SurikenAttack");
+
 		ItemData.AddSuriken(-1);
 
 		Vector3 offset = new Vector3(0.7f, 1f, 0);
@@ -266,7 +291,7 @@ public class PlayerController : MonoBehaviour {
 
 	public void UseDragonSkill() {
 		if (special) return;
-		if (ItemData.DragonCount <= 0) return;
+//		if (ItemData.DragonCount <= 0) return;
 
 		ItemData.AddDragon(-1);
 
@@ -276,17 +301,18 @@ public class PlayerController : MonoBehaviour {
 
 	public void UseChuongSkill() {
 		if (special) return;
-		if (ItemData.ChuongCount <= 0) return;
+//		if (ItemData.ChuongCount <= 0) return;
 		ItemData.AddChuong(-1);
 
-		Vector3 pos = new Vector3(transform.position.x + 0.5f, transform.position.y, transform.position.z);
+		if (grounded) animator.SetTrigger("Chuong");
+		Vector3 pos = new Vector3(transform.position.x + GameConst.CHUONG_OFFSET_X, transform.position.y + GameConst.CHUONG_OFFSET_Y, transform.position.z);
 		Instantiate(chuongSkill, pos, Quaternion.identity);
 	}
 
 	public void LaunchBigSlash() {
 		if (special) return;
 
-		Vector3 offset = new Vector3(2, 0, 0);
+		Vector3 offset = new Vector3(2, 1.2f, 0);
 		GameObject phitieu = Instantiate(bigSlash, transform.position + offset, Quaternion.identity) as GameObject;
 		
 		phitieu.GetComponent<Rigidbody2D>().velocity = new Vector3(kunaiSpeed, 0, 0);
@@ -295,7 +321,7 @@ public class PlayerController : MonoBehaviour {
 	public void LaunchBigKunai() {
 		if (special) return;
 
-		Vector3 offset = new Vector3(1, 0, 0);
+		Vector3 offset = new Vector3(1, 1.2f, 0);
 		GameObject phitieu = Instantiate(bigKunai, transform.position + offset, Quaternion.identity) as GameObject;
 		
 		phitieu.GetComponent<Rigidbody2D>().velocity = new Vector3(kunaiSpeed, 0, 0);
@@ -307,11 +333,11 @@ public class PlayerController : MonoBehaviour {
 		if (grounded || !doubleJump) {
 
 			GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpHeight);
-			GetComponent<Animator>().SetBool("Ground", false);
+			animator.SetBool("Ground", false);
 
 			if (!doubleJump && !grounded) {
 				doubleJump = true;
-				GetComponent<Animator>().SetBool("DoubleJump", true);
+				animator.SetBool("DoubleJump", true);
 			}
 		}
 	}
@@ -336,11 +362,13 @@ public class PlayerController : MonoBehaviour {
 
 	void OutOfHP() {
 //		Debug.Log("Grounded:" + grounded);
-		if (grounded) GetComponent<Animator>().SetInteger("Died", 1);
-		else GetComponent<Animator>().SetInteger("Died", 2);
+		if (grounded) animator.SetInteger("Died", 1);
+		else {
+			animator.SetInteger("Died", 2);
+		}
 
-//		GetComponent<Animator>().SetBool("Ground", grounded);
-//		Debug.Log(GetComponent<Animator>().GetBool("Die"));
+//		animator.SetBool("Ground", grounded);
+//		Debug.Log(animator.GetBool("Die"));
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
@@ -353,7 +381,7 @@ public class PlayerController : MonoBehaviour {
 
 	public void UseSpecialSkill() {
 		special = true;
-		GetComponent<Animator>().SetBool("special", true);
+		animator.SetBool("special", true);
 		CameraController cam = FindObjectOfType<CameraController>();
 		cam.setSpecial(1);
 		GetComponent<Rigidbody2D>().isKinematic = true;
@@ -374,7 +402,7 @@ public class PlayerController : MonoBehaviour {
 
 	public void afterFinishSpecialSkill() {
 		special = false;
-		GetComponent<Animator>().SetBool("special", false);
+		animator.SetBool("special", false);
 		GetComponent<Rigidbody2D>().isKinematic = false;
 	}
 
