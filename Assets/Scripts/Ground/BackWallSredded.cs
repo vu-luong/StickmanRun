@@ -13,11 +13,12 @@ public class BackWallSredded : MonoBehaviour {
 		GetComponent<Rigidbody2D>().velocity = new Vector3(player.GetComponent<Rigidbody2D>().velocity.x, 0, 0);
 	}
 	
-	void OnTriggerEnter2D(Collider2D col) {
+	void OnTriggerExit2D(Collider2D col) {
 		string tag = col.gameObject.tag;
-		if (tag == "PlayerBigKunai" || tag == "PlayerKunai"
-			|| tag == "_PlayerBigKunai" || tag == "_PlayerKunai"
-			|| tag == "Dragon")
+		if (tag == "PlayerBigKunai" || tag == "PlayerKunai" || tag == "_PlayerBigKunai" || tag == "_PlayerKunai")
 			Destroy(col.gameObject);
+		if (tag == "Dragon" || tag == "_Dragon") {
+			Destroy(col.gameObject);
+		}
 	}
 }

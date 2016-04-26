@@ -25,13 +25,15 @@ public class ChongController : MonoBehaviour {
 //		Debug.Log(tag);
 
 		if (tag == "SpawnGroundDetect") {
+//			Debug.Log("chong chong chong");
 			Invoke("Appear", 2);
 		}
 	}
 
 	void Appear() {
 //		Debug.Log("Spawn Ground Detect");
-		GetComponent<Animator>().SetBool("Appear", true);
+		if (transform.parent != null && transform.parent.GetComponent<Animator>() != null)
+			this.transform.parent.gameObject.GetComponent<Animator>().SetBool("Appear", true);
 	}
 
 }

@@ -35,6 +35,13 @@ public abstract class ProgressBar : MonoBehaviour {
 		}
 	}
 
+	public void SetProgress(int number) {
+		progress = number*unit;
+		this.transform.localScale = new Vector3(progress,
+												this.transform.localScale.y, 
+												this.transform.localScale.z);
+	}
+
 	public float GetProgress() {
 		return progress;
 	}

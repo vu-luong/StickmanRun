@@ -91,7 +91,7 @@ public class CameraController : MonoBehaviour {
 	}
 
 	void updateDistance(float dis) {
-		dis = dis * 3;
+		dis = dis * 6;
 		FindObjectOfType<DistanceController>().updateDistance(dis);
 		FindObjectOfType<GameBalance>().SetDistance(dis);
 	}

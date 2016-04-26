@@ -9,6 +9,16 @@ public class ItemData : MonoBehaviour {
 	private static int upCount;
 	private static float timeMagnetCount;
 	private static bool isUpgradedSlash;
+	private static int numToSave = GameConst.DEFAULT_NUM_TO_SAVE;
+
+	public static int NumToSave {
+		get {
+			return numToSave;
+		}
+		set {
+			numToSave = value;
+		}
+	}
 
 	public static bool IsUpgradedSlash {
 		get {
@@ -85,6 +95,10 @@ public class ItemData : MonoBehaviour {
 		if (timeMagnetCount < 0)timeMagnetCount = 0;
 	}
 
+	public static void AddNumToSave(int num) {
+		numToSave += num;
+	}
+
 	public static void ResetCount() {
 		surikenCount = 0;
 		dragonCount = 0;
@@ -92,5 +106,6 @@ public class ItemData : MonoBehaviour {
 		upCount = 0;
 		timeMagnetCount = 0;
 		isUpgradedSlash = false;
+		numToSave = GameConst.DEFAULT_NUM_TO_SAVE;
 	}
 }

@@ -4,7 +4,7 @@ using System.Collections;
 public class GameBalance : MonoBehaviour {
 	public GameObject flyEnemySpawn;
 	public GameObject walkEnemySpawn;
-
+	public GameObject comboObj;
 
 	public float distance;
 	private bool notGenBoss = true;
@@ -12,11 +12,17 @@ public class GameBalance : MonoBehaviour {
 	private Vector3 offsetFlyEnemySpawn;
 	private Vector3 offsetWalkEnemySpawn;
 
+	private float timeCountEnemiesDie;
+	private float currentTimeEnemiesDie;
+	private int comboNum;
+
 	// Use this for initialization
 	void Start () {
 		notGenBoss = true;
 		offsetFlyEnemySpawn = new Vector3(5, 0, 0);
 		offsetWalkEnemySpawn = new Vector3(5, -1, 0);
+		timeCountEnemiesDie = 0;
+		comboNum = 0;
 	}
 
 	void Update() {
@@ -34,6 +40,14 @@ public class GameBalance : MonoBehaviour {
 			timeSpawnWalkEnemy = 0;
 		}
 
+		/*
+		 * 
+		 */	
+		timeCountEnemiesDie += Time.deltaTime;
+
+		if (timeCountEnemiesDie - currentTimeEnemiesDie > 1) {
+			DisapearCombo();
+		}
 	}
 
 	public void SetDistance (float distance) {
@@ -46,5 +60,34 @@ public class GameBalance : MonoBehaviour {
 
 	public void GenBoss () {
 		FindObjectOfType<BossFormation>().BossAppear();
+	}
+
+	public void EnemyDieTrigger() {
+//		Debug.Log(timeCountEnemiesDie);
+		float e = timeCountEnemiesDie - currentTimeEnemiesDie;
+		currentTimeEnemiesDie = timeCountEnemiesDie;
+
+		if (e < 0.5f) {
+			comboNum++;
+
+			if (comboNum > 1) {
+				ComboCount.ComboNum = comboNum;
+				AppearCombo();
+			}
+
+		} else {
+			comboNum = 1;
+			timeCountEnemiesDie = 0;
+			currentTimeEnemiesDie = 0;
+		}
+	}
+
+	void AppearCombo() {
+		comboObj.SetActive(true);
+		//Invoke("DisapeatCombo", 0.5f);
+	}
+
+	void DisapearCombo() {
+		comboObj.SetActive(false);
 	}
 }

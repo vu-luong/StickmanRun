@@ -40,7 +40,7 @@ public class GameConst : MonoBehaviour {
 
 	public static int PLAYER_SPECIAL_POWER = 100;
 
-	public static float TIME_HOLD_BIG_KUNAI = 0.4f;
+	public static float TIME_HOLD_BIG_KUNAI = 0.5f;
 	public static float TIME_HOLD_BIG_SLASH = 1.2f;
 
 	public static float CHUONG_OFFSET_X = -0.2f;
@@ -51,5 +51,7 @@ public class GameConst : MonoBehaviour {
 	public static string MUSIC_KEY = "music key";
 	public static string SOUND_KEY = "sound key";
 	public static string VIBRATE_KEY = "vibrate key";
+
+	public static int DEFAULT_NUM_TO_SAVE = 1000;
 
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour {
 
@@ -37,7 +38,7 @@ public class GameStateManager : MonoBehaviour {
 
 	public void GoToGameOver() {
 		ItemData.ResetCount();
-		Application.LoadLevel("GameOver");
+		SceneManager.LoadScene("GameOver");
 	}
 
 }

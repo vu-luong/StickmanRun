@@ -82,7 +82,7 @@ public class HomeStateManager : MonoBehaviour {
 		yield return new WaitForSeconds(0.5f);
 
 		// Start an asynchronous operation to load the scene that was passed to the LoadNewScene coroutine.
-		AsyncOperation async = SceneManager.LoadSceneAsync("Play");
+		AsyncOperation async = SceneManager.LoadSceneAsync("Play2");
 
 //		Debug.Log("Progress" + async.progress);
 

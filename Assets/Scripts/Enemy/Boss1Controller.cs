@@ -2,14 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
+using UnityEngine.SceneManagement;
 
 public class Boss1Controller : Enemy {
 
 	public GameObject[] chuongs;
+	private int fullHP;
 
 	protected override void InitHP () {
-		Debug.Log ("den day roi");
+//		Debug.Log ("den day roi");
 		HP = 200;
+		fullHP = HP;
 	}
 
 	protected override void InitSpeed() {
@@ -25,9 +28,20 @@ public class Boss1Controller : Enemy {
 		UseChuong();
 	}
 
-//	void Update() {
-//
-//	}
+	protected override void Update() {
+		base.Update();
+			
+		if (isDead) {
+			BossFormation b = FindObjectOfType<BossFormation>();
+			b.BossHPDisappear();
+			//TODO- 
+//			if (DistanceController.runDistance > 50000)
+//				b.ToVictory();
+		}
+
+		BossHPProgress bossHPProgress = FindObjectOfType<BossHPProgress>();
+		if (bossHPProgress != null) bossHPProgress.SetProgress(Mathf.Max((int)((HP*1.0f/fullHP)*100), 0));
+	}
 
 	public void UseChuong() {
 		GetComponent<Animator>().SetTrigger("Chuong");
@@ -41,7 +55,7 @@ public class Boss1Controller : Enemy {
 		string tag = col.gameObject.tag;
 		if (tag == "_PlayerBigKunai" || tag == "_PlayerBigSlash"
 			|| tag == "_Dragon" || tag == "_Chuong") {
-			Debug.Log("da trigger roi");
+//			Debug.Log("da trigger roi");
 			return;
 		}
 		base.OnTriggerEnter2D(col);

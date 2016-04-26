@@ -21,10 +21,13 @@ public abstract class Enemy : MonoBehaviour {
 	}
 
 	protected virtual void Update () {
-		if (isDead) Destroy(gameObject);
+		if (isDead) {
+			FindObjectOfType<GameBalance>().EnemyDieTrigger();
+			Destroy(gameObject);	
+		}
 		
 		if (isAttackingPlayer() && attackedPlayer == false && GetComponent<Animator>().GetBool("Die") == false) {
-			Debug.Log("attackkkkk!");
+//			Debug.Log("attackkkkk!");
 			FindObjectOfType<PlayerController>().beAttacked(20);
 			attackedPlayer = true;
 		}
@@ -56,7 +59,7 @@ public abstract class Enemy : MonoBehaviour {
 			HP -= GetPlayerPower(tag);
 			if (tag[0] != '_' && gameObject.tag == "Boss1") col.gameObject.tag = "_" + tag;
 
-			if (gameObject.tag == "Boss1") Debug.Log("aaaaa");
+//			if (gameObject.tag == "Boss1") Debug.Log("aaaaa");
 
 		} else
 			
@@ -86,4 +89,12 @@ public abstract class Enemy : MonoBehaviour {
 		return 10;
 	}
 
+	public bool IsDead {
+		get {
+			return isDead;
+		}
+		set {
+			isDead = value;
+		}
+	}
 }

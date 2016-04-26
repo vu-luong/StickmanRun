@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class BuyHPController : BuyController {
 
@@ -8,7 +9,7 @@ public class BuyHPController : BuyController {
 	// Use this for initialization
 	void Start () {
 		if (DataPref.getNumData(GameConst.NUM_COLLECT_KEY) < GameConst.HP_COST
-		    || Application.loadedLevelName == "Home") {
+			|| SceneManager.GetActiveScene().name == "Home") {
 			image.SetActive(true);
 		} else {
 			image.SetActive(false);
@@ -16,7 +17,7 @@ public class BuyHPController : BuyController {
 	}
 
 	void Update() {
-		if (Application.loadedLevelName == "Home") return;
+		if (SceneManager.GetActiveScene().name == "Home") return;
 
 		HPController hpObject = FindObjectOfType<HPController>();
 		if (DataPref.getNumData(GameConst.NUM_COLLECT_KEY) < GameConst.HP_COST 

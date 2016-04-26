@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
@@ -45,13 +46,17 @@ public class PlayerController : MonoBehaviour {
 
 	bool isGameOver;
 
+	float timeGoToGOV;
+
 	private Animator animator;
+	public bool saved;
 
 	// Use this for initialization
 	void Start () {
 		timeButtonHolding = 0;
+		timeGoToGOV = 0;
 		ButtonHolding = false;
-		circleEffect = Instantiate(circleEffectPrefab, transform.position + new Vector3(0, 1.2f, -1), Quaternion.identity) as GameObject;
+		circleEffect = Instantiate(circleEffectPrefab, transform.position + new Vector3(-0.5f, 1.2f, -1), Quaternion.identity) as GameObject;
 		circleEffect.transform.parent = this.transform;
 		circleEffect.SetActive(false);
 //		Debug.Log (GetComponent<Rigidbody2D>().gravityScale);
@@ -63,14 +68,18 @@ public class PlayerController : MonoBehaviour {
 		isDead = false;
 		isGameOver = false;
 		animator = GetComponent<Animator>();
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (isDead) return;
 		if (ButtonHolding) timeButtonHolding += Time.deltaTime;
-		if (timeButtonHolding > 0.1f) {
+		if (timeButtonHolding > 0.3f) {
 			circleEffect.SetActive(true);
+			if (timeButtonHolding > GameConst.TIME_HOLD_BIG_SLASH) {
+				circleEffect.GetComponent<Animator>().SetTrigger("next");
+			}
 		}
 
 		if (Input.GetKeyDown(KeyCode.F)) {
@@ -123,7 +132,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-		if (isGameOver) return;
+		
 		if (isDead) {
 			GetComponent<SpriteRenderer>().enabled = false;
 			Reborn();
@@ -131,6 +140,8 @@ public class PlayerController : MonoBehaviour {
 		} else {
 			animator.SetBool("Reborn", false);
 		}
+
+		if (isGameOver) return;
 
 		if (upDown) {
 			float t = transform.position.y - positionYBeforeUpDown;
@@ -167,15 +178,27 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	void OutOfHP() {
+//		Debug.Log("Out of HP");
+		if (grounded) animator.SetInteger("Died", 1);
+		else {
+			animator.SetInteger("Died", 2);
+		}
+
+		//		animator.SetBool("Ground", grounded);
+		//		Debug.Log(animator.GetBool("Die"));
+	}
+
 	void Reborn () {
-			
+
+//		Debug.Log("Reborn");
+
 		if (ItemData.UpCount > 0) {
-			Debug.Log ("rebornnnn");
+//			Debug.Log ("rebornnnn");
 
 			CameraController mainCam = FindObjectOfType<CameraController> ();
 			if (!grounded)
 				transform.position = new Vector3(transform.position.x, mainCam.transform.position.y + 3, transform.position.z);
-			
 
 			GetComponent<SpriteRenderer>().enabled = true;
 			GetComponent<Collider2D>().enabled = true;
@@ -185,9 +208,9 @@ public class PlayerController : MonoBehaviour {
 			hpObject.IncreaseProcess(100);
 			isDead = false;
 			ItemData.AddUp(-1);
-		} else {
+			saved = false;
+		} else 
 			GameOver();
-		}
 	
 	}
 
@@ -197,12 +220,19 @@ public class PlayerController : MonoBehaviour {
 		FindObjectOfType<CameraFrontBGController>().ScrollSpeed = 0;
 
 		isGameOver = true;
+		gameOverCanvas.transform.parent.gameObject.SetActive(true);
 		gameOverCanvas.GetComponent<Animator>().SetBool("gameover", true);
-		Invoke("GoToGameOver", 5);
-	}
 
-	void GoToGameOver() {
-		Application.LoadLevel("GameOver");
+		if (!saved) {
+//			Debug.Log(timeGoToGOV);
+			timeGoToGOV += Time.deltaTime;
+			if (timeGoToGOV > 5) {
+				SceneManager.LoadScene("GameOver");	
+				timeGoToGOV = 0;
+			}
+		} else {
+			timeGoToGOV = 0;
+		}
 	}
 
 	void Chay(float vSpeed, float hSpeed) {
@@ -235,9 +265,7 @@ public class PlayerController : MonoBehaviour {
 
 	public void Chem() {
 		if (special) return;
-		Debug.Log(isChem1 + " " + isChem2);
 
-//		animator.SetBool("SwordAttack", true);
 		if (!isChem1 && !isChem2) {
 			animator.SetTrigger("SwordAttack");
 			animator.SetBool("Return1", true);
@@ -245,13 +273,11 @@ public class PlayerController : MonoBehaviour {
 			animator.SetTrigger("SwordAttack2");
 			animator.SetBool("Return1", false);
 			animator.SetBool("Return2", true);
-			Debug.Log("Dang chem 1 ma bam F");
 		} else if (isChem2) {
-			Debug.Log("Den day roi");
 			animator.SetTrigger("SwordAttack3");
 			animator.SetBool("Return2", false);
 			animator.SetBool("Return1", false);
-			animator.SetBool("Return3", true);
+//			animator.SetBool("Return3", true);
 		}
 
 //		Vector3 offset = new Vector3(2.5f, 0, 0);
@@ -360,17 +386,6 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	void OutOfHP() {
-//		Debug.Log("Grounded:" + grounded);
-		if (grounded) animator.SetInteger("Died", 1);
-		else {
-			animator.SetInteger("Died", 2);
-		}
-
-//		animator.SetBool("Ground", grounded);
-//		Debug.Log(animator.GetBool("Die"));
-	}
-
 	void OnCollisionEnter2D(Collision2D coll) {
 		if (coll.gameObject.tag == "Ground") {
 			CameraController mainCam = FindObjectOfType<CameraController> ();
@@ -380,6 +395,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void UseSpecialSkill() {
+//		transform.position = new Vector3(transform.position.x, 0.7f, transform.position.z);
 		special = true;
 		animator.SetBool("special", true);
 		CameraController cam = FindObjectOfType<CameraController>();
@@ -388,7 +404,7 @@ public class PlayerController : MonoBehaviour {
 
 		specialObj.SetActive(true);
 		speed = speed * 1.5f;
-		Invoke("finishSpecialSkill", 4);
+		Invoke("finishSpecialSkill", 4.3f);
 	}
 
 	public void finishSpecialSkill() {
@@ -415,6 +431,18 @@ public class PlayerController : MonoBehaviour {
 		upDown = true;
 		positionYBeforeUpDown = transform.position.y;
 //		Debug.Log("positionYBeforeUpDown: " + positionYBeforeUpDown);
+	}
+
+	public void Save() {
+		FindObjectOfType<CameraUpBGController>().ScrollSpeed = 5;
+		FindObjectOfType<CameraFrontBGController>().ScrollSpeed = 10;
+		timeGoToGOV = 0;
+		saved = true;
+		isGameOver = false;
+		Time.timeScale = 1;
+		Chay(speed, GetComponent<Rigidbody2D>().velocity.y);
+		ItemData.AddUp(1);
+		Reborn();
 	}
 	
 }

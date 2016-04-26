@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class GameOverStateManager : MonoBehaviour {
 
 	public void gotoHomeScene() {
-		Application.LoadLevel("Home");
+		SceneManager.LoadScene("Home");
 	}
 
 	public void gotoPlayScene() {
