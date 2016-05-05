@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour {
 
@@ -12,6 +13,10 @@ public class CameraController : MonoBehaviour {
 	private float DIS_PLAYER_CAM = 3.5f;
 
 	public int followSpecial = 0;
+
+	void Awake() {
+		SetPosForScene();
+	}
 
 	void Start() {
 		startPosition = this.transform.position;
@@ -99,4 +104,12 @@ public class CameraController : MonoBehaviour {
 	public void updatePosition(float offset) {
 	}
 
+	public void SetPosForScene() {
+		string name = SceneManager.GetActiveScene().name;
+		if (name == "Play0") ItemData.Pos = 0;
+		else if (name == "Play1") ItemData.Pos = 1;
+		else if (name == "Play2") ItemData.Pos = 2;
+		else if (name == "Play3") ItemData.Pos = 3;
+		else if (name == "Play4") ItemData.Pos = 4;
+	}
 }

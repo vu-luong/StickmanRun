@@ -3,11 +3,12 @@ using System.Collections;
 
 public class WalkEnemySpawn : MonoBehaviour {
 
-	public GameObject walkEnemy;
+	public GameObject[] walkEnemies;
+	private int pos;
 
 	// Use this for initialization
 	void Start () {
-		
+		pos = ItemData.Pos;
 	}
 	
 	// Update is called once per frame
@@ -20,8 +21,8 @@ public class WalkEnemySpawn : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col) {
-		if (col.gameObject.tag == "SpawnEnemyDetect") {
-			Instantiate(walkEnemy, transform.position, Quaternion.identity);
+		if (col.gameObject.tag == GameConst.SPAWN_BALANCE_TAG) {
+			Instantiate(walkEnemies[pos], transform.position, Quaternion.identity);
 		}
 	}
 	

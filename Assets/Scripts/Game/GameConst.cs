@@ -54,4 +54,12 @@ public class GameConst : MonoBehaviour {
 
 	public static int DEFAULT_NUM_TO_SAVE = 1000;
 
+	public static string PHI_TIEU_AUDIO = "phitieu";
+	public static string PLAYER_INJURE_AUDIO = "player injure";
+	public static string PLAYER_DEAD_AUDIO = "player dead";
+	public static string PLAYER_CHEM_AUDIO = "player chem";
+	public static string BUTTON_CLICK_AUDIO = "button click";
+
+
+	public static string SPAWN_BALANCE_TAG = "SpawnBalanceDetect";
 }

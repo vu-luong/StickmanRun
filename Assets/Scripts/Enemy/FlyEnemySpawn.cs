@@ -3,12 +3,12 @@ using System.Collections;
 
 public class FlyEnemySpawn : MonoBehaviour {
 
-	public GameObject flyEnemy;
-	public GameObject flyEnemySpawn;
+	public GameObject[] flyEnemies;
+	private int pos;
 
 	// Use this for initialization
 	void Start () {
-	
+		pos = ItemData.Pos;
 	}
 	
 	// Update is called once per frame
@@ -21,8 +21,8 @@ public class FlyEnemySpawn : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter2D(Collider2D col) {
-		if (col.gameObject.tag == "SpawnEnemyDetect") {
-			Instantiate(flyEnemy, transform.position, Quaternion.identity);
+		if (col.gameObject.tag == GameConst.SPAWN_BALANCE_TAG) {
+			Instantiate(flyEnemies[pos], transform.position, Quaternion.identity);
 		}
 	}
 

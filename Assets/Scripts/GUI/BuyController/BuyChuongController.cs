@@ -7,8 +7,6 @@ public class BuyChuongController : BuyController {
 	
 	// Use this for initialization
 	void Start () {
-		//		image.SetActive(true);
-		
 		if (DataPref.getNumData(GameConst.NUM_COLLECT_KEY) < GameConst.CHUONG_COST) {
 			image.SetActive(true);
 		} else {

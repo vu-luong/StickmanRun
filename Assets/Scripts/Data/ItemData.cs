@@ -10,6 +10,16 @@ public class ItemData : MonoBehaviour {
 	private static float timeMagnetCount;
 	private static bool isUpgradedSlash;
 	private static int numToSave = GameConst.DEFAULT_NUM_TO_SAVE;
+	private static int pos = 1;
+
+	public static int Pos {
+		get {
+			return pos;
+		}
+		set {
+			pos = value;
+		}
+	}
 
 	public static int NumToSave {
 		get {

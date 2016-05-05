@@ -4,6 +4,7 @@ using System.Collections;
 public abstract class BuyController : MonoBehaviour {
 	public GameObject completeCanvas;
 	public GameObject buyCanvas;
+	public AudioClip buttonClick;
 
 	protected abstract void BuyCompleted();
 
@@ -11,9 +12,11 @@ public abstract class BuyController : MonoBehaviour {
 		buyCanvas.SetActive(false);
 		completeCanvas.SetActive(true);
 		BuyCompleted();
+		SoundManager.instance.PlaySingle(buttonClick);
 	}
 
 	public void Continue() {
+		SoundManager.instance.PlaySingle(buttonClick);
 		completeCanvas.SetActive(false);
 		buyCanvas.SetActive(true);
 	}
