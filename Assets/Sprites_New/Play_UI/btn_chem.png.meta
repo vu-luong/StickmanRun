@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 0a2c85fc93b9c48cc9b49e03be678fd5
-timeCreated: 1460426883
+timeCreated: 1462437845
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -51,7 +51,7 @@ TextureImporter:
   spriteSheet:
     sprites: []
     outline: []
-  spritePackingTag: 
+  spritePackingTag: PlayUI
   userData: 
   assetBundleName: 
   assetBundleVariant: 
