@@ -7,6 +7,9 @@ public class GameBalance : MonoBehaviour {
 	public GameObject comboObj;
 	public GameObject fireSpawn;
 	public GameObject hpItemSpawn;
+	public GameObject specialItemSpawn;
+	public GameObject kunaiItemSpawn;
+	public GameObject upItemSpawn;
 
 	public float distance;
 	private bool notGenBoss = true;
@@ -18,13 +21,16 @@ public class GameBalance : MonoBehaviour {
 	private Vector3 offsetWalkEnemySpawn;
 	private Vector3 offsetFireSpawn;
 	private Vector3 offsetHPSpawn;
+	private Vector3 offsetSpecialSpawn;
+	private Vector3 offsetKunaiSpawn;
+	private Vector3 offsetUpSpawn;
 
 	private float timeCountEnemiesDie;
 	private float currentTimeEnemiesDie;
 	private int comboNum;
 
-	private int minPeriodTimeSpawnFire = 10;
-	private int maxPeriodTimeSpawnFire = 15;
+	private int minPeriodTimeSpawnFire = 8;
+	private int maxPeriodTimeSpawnFire = 13;
 
 	// Use this for initialization
 	void Start () {
@@ -34,6 +40,9 @@ public class GameBalance : MonoBehaviour {
 		offsetWalkEnemySpawn = new Vector3(5, -1, 0);
 		offsetFireSpawn = new Vector3(15, -0.7f, 0);
 		offsetHPSpawn = new Vector3(15, 1, 0);
+		offsetSpecialSpawn = new Vector3(15, 1, 0);
+		offsetKunaiSpawn = new Vector3(15, 1, 0);
+		offsetUpSpawn = new Vector3(15, 1, 0);
 
 		timeCountEnemiesDie = 0;
 		numSpawnFire = 0;
@@ -60,10 +69,18 @@ public class GameBalance : MonoBehaviour {
 			timeSpawnFire = 0;
 			numSpawnFire++;
 
-			if (numSpawnFire == 5) {
-				SpawnHPItem();
-				numSpawnFire = 0;
-			} else {
+			if (numSpawnFire % 3 == 0 && numSpawnFire != 9) {
+				int r = Random.Range(1, 4);
+				if (r == 1) SpawnHPItem();
+					else if (r == 2) SpawnSpecial();
+				else if (r == 3) SpawnKunai();
+
+//				numSpawnFire = 0;
+			} else 
+				if (numSpawnFire == 9) {
+					SpawnUp();
+					numSpawnFire = 0;
+				} else {
 				SpawnFire();
 			}
 
@@ -90,7 +107,7 @@ public class GameBalance : MonoBehaviour {
 		FindObjectOfType<BossFormation>().BossAppear();
 	}
 
-	public void EnemyDieTrigger() {
+	public void EnemyDieTrigger(string tag) {
 //		Debug.Log(timeCountEnemiesDie);
 		float e = timeCountEnemiesDie - currentTimeEnemiesDie;
 		currentTimeEnemiesDie = timeCountEnemiesDie;
@@ -108,6 +125,12 @@ public class GameBalance : MonoBehaviour {
 			timeCountEnemiesDie = 0;
 			currentTimeEnemiesDie = 0;
 		}
+
+		if (tag == "Boss1") {
+			Invoke("GenBoss", 17.0f);
+		}
+
+
 	}
 
 	void AppearCombo() {
@@ -129,4 +152,18 @@ public class GameBalance : MonoBehaviour {
 			offsetHPSpawn.y, 0), Quaternion.identity);
 	}
 
+	void SpawnSpecial() {
+		Instantiate(specialItemSpawn, new Vector3(transform.position.x + offsetSpecialSpawn.x,
+			offsetSpecialSpawn.y, 0), Quaternion.identity);
+	}
+
+	void SpawnKunai() {
+		Instantiate(kunaiItemSpawn, new Vector3(transform.position.x + offsetKunaiSpawn.x,
+			offsetKunaiSpawn.y, 0), Quaternion.identity);
+	}
+
+	void SpawnUp() {
+		Instantiate(upItemSpawn, new Vector3(transform.position.x + offsetUpSpawn.x,
+			offsetUpSpawn.y, 0), Quaternion.identity);
+	}
 }

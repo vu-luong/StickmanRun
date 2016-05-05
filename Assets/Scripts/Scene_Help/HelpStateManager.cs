@@ -26,7 +26,7 @@ public class HelpStateManager : MonoBehaviour {
 
 		// Start an asynchronous operation to load the scene that was passed to the LoadNewScene coroutine.
 
-		string name = HomeStateManager.GetSceneName();
+		string name = "Play0";//HomeStateManager.GetSceneName();
 
 		AsyncOperation async = SceneManager.LoadSceneAsync(name, LoadSceneMode.Single);
 

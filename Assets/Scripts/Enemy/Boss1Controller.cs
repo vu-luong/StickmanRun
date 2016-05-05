@@ -29,15 +29,18 @@ public class Boss1Controller : Enemy {
 	}
 
 	protected override void Update() {
-		base.Update();
-			
 		if (isDead) {
 			BossFormation b = FindObjectOfType<BossFormation>();
 			b.BossHPDisappear();
 			//TODO- 
-//			if (DistanceController.runDistance > 50000)
-//				b.ToVictory();
+			//			if (DistanceController.runDistance > 50000)
+			//				b.ToVictory();
+
+			/* trigger su kien xuat hien boss tiep theo */
+			// GameBalance -> appearNextBoss();
 		}
+
+		base.Update();
 
 		BossHPProgress bossHPProgress = FindObjectOfType<BossHPProgress>();
 		if (bossHPProgress != null) bossHPProgress.SetProgress(Mathf.Max((int)((HP*1.0f/fullHP)*100), 0));

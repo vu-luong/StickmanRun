@@ -22,8 +22,8 @@ public abstract class Enemy : MonoBehaviour {
 
 	protected virtual void Update () {
 		if (isDead) {
-			FindObjectOfType<GameBalance>().EnemyDieTrigger();
-			Destroy(gameObject);	
+			FindObjectOfType<GameBalance>().EnemyDieTrigger(gameObject.tag);
+			Destroy(gameObject);
 		}
 		
 		if (isAttackingPlayer() && attackedPlayer == false && GetComponent<Animator>().GetBool("Die") == false) {
