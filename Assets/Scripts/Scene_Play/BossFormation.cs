@@ -8,6 +8,15 @@ public class BossFormation : MonoBehaviour {
 	public GameObject bossHPBG;
 	public GameObject bossHPProgress;
 
+	public GameObject BossHPProgress {
+		get {
+			return bossHPProgress;
+		}
+		set {
+			bossHPProgress = value;
+		}
+	}
+
 	public int pos;
 
 	// Use this for initialization

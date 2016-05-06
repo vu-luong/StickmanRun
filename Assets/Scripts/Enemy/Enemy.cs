@@ -12,55 +12,59 @@ public abstract class Enemy : MonoBehaviour {
 	protected abstract void InitHP();
 
 	private GameObject temp;
+	protected GameBalance gameBalance;
+	protected GameObject player;
+	protected PlayerController playerController;
+	protected Animator animator;
+	protected Collider2D col2D;
+	protected Rigidbody2D rigid2D;
 
 	protected virtual void Start () {
 		isDead = false;
 		attackedPlayer = false;
+		gameBalance = GameObject.Find("GameBalance").GetComponent<GameBalance>();
+		player = GameObject.FindGameObjectWithTag("Player");
+		playerController = player.GetComponent<PlayerController>();
+		animator = GetComponent<Animator>();
+		col2D = GetComponent<Collider2D>();
+		rigid2D = GetComponent<Rigidbody2D>();
+
 		InitSpeed();
 		InitHP();
 	}
 
 	protected virtual void Update () {
 		if (isDead) {
-			FindObjectOfType<GameBalance>().EnemyDieTrigger(gameObject.tag);
+			gameBalance.EnemyDieTrigger(gameObject.tag);
 			Destroy(gameObject);
 		}
 		
-		if (isAttackingPlayer() && attackedPlayer == false && GetComponent<Animator>().GetBool("Die") == false) {
-//			Debug.Log("attackkkkk!");
-			FindObjectOfType<PlayerController>().beAttacked(20);
+		if (isAttackingPlayer() && attackedPlayer == false && animator.GetBool("Die") == false) {
+			playerController.beAttacked(20);
 			attackedPlayer = true;
 		}
-	}
 
-	
-	void FixedUpdate() {
 		Move();
 	}
 
 	protected abstract void Move();
 
 	protected bool isAttackingPlayer() {
-		Bounds enemyBound = GetComponent<Collider2D>().bounds;
-		Bounds playerBound = FindObjectOfType<PlayerController>().GetComponent<Collider2D>().bounds;
+		Bounds enemyBound = col2D.bounds;
+		Bounds playerBound = player.GetComponent<Collider2D>().bounds;
 		return enemyBound.Intersects(playerBound);
 	}
 
 	protected virtual void OnTriggerEnter2D(Collider2D col) {
-		if (GetComponent<Animator>().GetBool("Die")) return;
+		if (animator.GetBool("Die")) return;
 		string tag = col.gameObject.tag;
 
 		// _tagname: tag after trigger, to avoid trigger with an obj twice;
 
-		if (tag == "Dragon" || tag == "Chuong"
-		    || tag == "PlayerBigKunai" || tag == "PlayerBigSlash"
-			|| tag == "_PlayerBigKunai" || tag == "_PlayerBigSlash"
-			|| tag == "_Dragon" || tag == "_Chuong") {
+		if (tag == "Dragon" || tag == "Chuong" || tag == "PlayerBigKunai" || tag == "PlayerBigSlash" || 
+			tag == "_PlayerBigKunai" || tag == "_PlayerBigSlash" ||  tag == "_Dragon" || tag == "_Chuong") {
 			HP -= GetPlayerPower(tag);
 			if (tag[0] != '_' && gameObject.tag == "Boss1") col.gameObject.tag = "_" + tag;
-
-//			if (gameObject.tag == "Boss1") Debug.Log("aaaaa");
-
 		} else
 			
 		if (tag == "PlayerSlash" || tag == "PlayerSpecial") {
@@ -72,8 +76,8 @@ public abstract class Enemy : MonoBehaviour {
 		}
 
 		if (HP <= 0) {
-			GetComponent<Animator>().SetBool("Die", true);
-			if (GetComponent<Rigidbody2D>() != null) GetComponent<Rigidbody2D>().gravityScale = 1;
+			animator.SetBool("Die", true);
+			if (rigid2D != null) rigid2D.gravityScale = 1;
 		}
 
 	}

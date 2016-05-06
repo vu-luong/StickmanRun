@@ -12,7 +12,7 @@ public class EnemyWalkController : Enemy {
 	}
 
 	protected override void Move() {
-		GetComponent<Rigidbody2D>().velocity = new Vector2(- speed, GetComponent<Rigidbody2D>().velocity.y);
+		rigid2D.velocity = new Vector2(- speed, rigid2D.velocity.y);
 	}
 
 }

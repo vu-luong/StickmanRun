@@ -7,8 +7,10 @@ public class CameraUpBGController : MonoBehaviour {
 	private float tileSizeZ;
 	public GameObject bg1;
 	public GameObject bg2;
-	
+	public PlayerController player;
+
 	private Vector3 startPosition;
+
 	
 	void Start () {
 		startPosition = transform.position;
@@ -21,7 +23,7 @@ public class CameraUpBGController : MonoBehaviour {
 		float newPosition = Mathf.Repeat(Time.time * scrollSpeed, tileSizeZ);
 		transform.position = startPosition + Vector3.right * newPosition;
 
-		float offsetY = FindObjectOfType<PlayerController>().GetOffsetWithCurrent().y;
+		float offsetY = player.GetOffsetWithCurrent().y;
 		if (offsetY < 0) offsetY = 0; //Truong hop player bi roi xuong vuc
 
 		transform.position = transform.position + new Vector3(0, offsetY / 10, 0);

@@ -7,7 +7,7 @@ public class CollectibleRed : Collectible {
 
 	protected override void InitBarAndType ()
 	{
-		bar = FindObjectOfType<RedFireMid>();
+		bar = GameObject.Find("RedFire_mid").GetComponent<RedFireMid>();
 	}
 
 	#endregion

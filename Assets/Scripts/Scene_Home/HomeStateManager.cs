@@ -50,6 +50,11 @@ public class HomeStateManager : MonoBehaviour {
 		SceneManager.LoadScene("Help", LoadSceneMode.Single);
 	}
 
+	public void GoToStoryScene() {
+		SoundManager.instance.PlaySingleByName(GameConst.BUTTON_CLICK_AUDIO);
+		SceneManager.LoadScene("Story", LoadSceneMode.Single);
+	}
+
 	public void ExitGame() {
 		SoundManager.instance.PlaySingleByName(GameConst.BUTTON_CLICK_AUDIO);
 		Application.Quit();

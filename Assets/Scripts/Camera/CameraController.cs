@@ -4,7 +4,10 @@ using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour {
 
-	public GameObject player;
+	public PlayerController player;
+	public DistanceController distanceController;
+	public GameBalance gameBalance;
+
 	private Vector3 startPosition;
 	private float positionY;
 	private float oldPositionY;
@@ -50,13 +53,11 @@ public class CameraController : MonoBehaviour {
 	}
 
 	void FollowPlayer() {
-		if (FindObjectOfType<PlayerController>().isDead) return;
+		if (player.isDead) return;
 
-		float offsetY = FindObjectOfType<PlayerController>().GetOffsetWithCurrent().y;
-//		Debug.Log("offsetY " + offsetY);
+		float offsetY = player.GetOffsetWithCurrent().y;
 
 		if (offsetY < 0) offsetY = 0; //Truong hop player bi roi xuong vuc
-//		Debug.Log(Mathf.Abs(positionY - oldPositionY)); 
 		if (Mathf.Abs(positionY - oldPositionY) > 0.1) {
 			//1
 			if (oldPositionY < positionY) oldPositionY += Time.deltaTime;
@@ -65,7 +66,6 @@ public class CameraController : MonoBehaviour {
 			transform.position = new Vector3(player.transform.position.x + DIS_PLAYER_CAM, oldPositionY + offsetY / 2, transform.position.z);
 		} else {
 			//2
-//			canSetMovingCam = false;
 			transform.position = new Vector3(player.transform.position.x + DIS_PLAYER_CAM, positionY + offsetY / 2, transform.position.z);
 		}
 	}
@@ -75,7 +75,7 @@ public class CameraController : MonoBehaviour {
 			transform.position = new Vector3(transform.position.x + Time.deltaTime, transform.position.y, transform.position.z);
 		else {
 			transform.position = new Vector3(player.transform.position.x, transform.position.y, transform.position.z);
-			player.GetComponent<PlayerController>().UpDownSpecial();
+			player.UpDownSpecial();
 		}
 			
 	}
@@ -87,7 +87,7 @@ public class CameraController : MonoBehaviour {
 		{
 			transform.position = new Vector3(player.transform.position.x + DIS_PLAYER_CAM, transform.position.y, transform.position.z);
 			followSpecial = 0;
-			player.GetComponent<PlayerController>().afterFinishSpecialSkill();
+			player.afterFinishSpecialSkill();
 		}
 	}
 
@@ -97,8 +97,8 @@ public class CameraController : MonoBehaviour {
 
 	void updateDistance(float dis) {
 		dis = dis * 6;
-		FindObjectOfType<DistanceController>().updateDistance(dis);
-		FindObjectOfType<GameBalance>().SetDistance(dis);
+		distanceController.updateDistance(dis);
+		gameBalance.SetDistance(dis);
 	}
 
 	public void updatePosition(float offset) {

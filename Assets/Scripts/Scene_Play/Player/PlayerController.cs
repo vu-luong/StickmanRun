@@ -68,7 +68,6 @@ public class PlayerController : MonoBehaviour {
 		isDead = false;
 		isGameOver = false;
 		animator = GetComponent<Animator>();
-
 	}
 	
 	// Update is called once per frame
@@ -441,5 +440,5 @@ public class PlayerController : MonoBehaviour {
 		ItemData.AddUp(1);
 		Reborn();
 	}
-	
+
 }

@@ -5,11 +5,11 @@ using UnityEngine.SceneManagement;
 public class GameOverStateManager : MonoBehaviour {
 
 	public void gotoHomeScene() {
-		SceneManager.LoadScene("Home");
+		SceneManager.LoadScene("Home", LoadSceneMode.Single);
 	}
 
 	public void gotoPlayScene() {
 		string name = HomeStateManager.GetSceneName();
-		SceneManager.LoadScene(name, LoadSceneMode.Single);
+		SceneManager.LoadScene("Story", LoadSceneMode.Single);
 	}
 }

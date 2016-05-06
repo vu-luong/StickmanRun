@@ -4,18 +4,18 @@ using System.Collections;
 public abstract class Collectible : MonoBehaviour {
 
 	protected ProgressBar bar;
-	private PlayerController player;
+	private GameObject player;
 
 	// Use this for initialization
 	void Start () {
 		InitBarAndType();
-		player = FindObjectOfType<PlayerController>();
+		player = GameObject.FindGameObjectWithTag("Player");
 	}
 
 	void Update() {
-		if (Vector2.Distance(transform.position, player.transform.position) > 10) return;
-
 		if (ItemData.TimeMagnetCount > 0) {
+			if (Vector2.Distance(transform.position, player.transform.position) > 10) return;
+
 			float step = 20.0f * Time.deltaTime;
 			transform.position = Vector3.MoveTowards(transform.position, player.transform.position, step);
 		}
@@ -26,7 +26,7 @@ public abstract class Collectible : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		string tag = other.gameObject.tag;
 		if (tag == "Player" || tag == "PlayerSpecial") {
-			player.Collect(this);
+			BeCollected();
 		}
 	}
 
