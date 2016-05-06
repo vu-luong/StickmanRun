@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class BestDistance : MonoBehaviour {
 
 	int count, maxCount, unit;
+	Text tex;
 
 	// Use this for initialization
 	void Start () {
@@ -18,7 +19,9 @@ public class BestDistance : MonoBehaviour {
 		}
 
 		count = 0;
-		this.GetComponent<Text>().text = count + " M";
+		tex = GetComponent<Text>();
+
+		tex.text = count + " M";
 		maxCount = bestDistance;
 		unit = maxCount / GameConst.TIME_INC_ANIM;
 	}
@@ -32,6 +35,6 @@ public class BestDistance : MonoBehaviour {
 			count = maxCount;
 		}
 
-		this.GetComponent<Text>().text = count + " M";
+		tex.text = count + " M";
 	}
 }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class ComboCount : MonoBehaviour {
 
 	public static int comboNum;
+	private Text tex;
 
 	public static int ComboNum {
 		get {
@@ -17,11 +18,12 @@ public class ComboCount : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		GetComponent<Text>().text = "" + comboNum;
+		tex = GetComponent<Text>();
+		tex.text = "" + comboNum;
 	}
 
 	void Update() {
-		GetComponent<Text>().text = "" + comboNum;
+		tex.text = "" + comboNum;
 	}
 	
 }

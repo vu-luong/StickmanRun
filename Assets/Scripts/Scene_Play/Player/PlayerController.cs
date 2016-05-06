@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour {
 	public GameObject circleEffectPrefab;
 	public GameObject specialObj;
 	public GameObject gameOverCanvas;
+	public CameraController camController;
+	public HPController hpController;
+	public CameraUpBGController camUp;
+	public CameraFrontBGController camFront;
 
 	public Transform groundCheck;
 	public LayerMask whatIsGround;
@@ -49,6 +53,10 @@ public class PlayerController : MonoBehaviour {
 	float timeGoToGOV;
 
 	private Animator animator;
+	private SpriteRenderer spriteRenderer;
+	private Rigidbody2D rigid2D;
+	private Collider2D col2D;
+
 	public bool saved;
 
 	// Use this for initialization
@@ -68,6 +76,9 @@ public class PlayerController : MonoBehaviour {
 		isDead = false;
 		isGameOver = false;
 		animator = GetComponent<Animator>();
+		spriteRenderer = GetComponent<SpriteRenderer>();
+		rigid2D = GetComponent<Rigidbody2D>();
+		col2D = GetComponent<Collider2D>();
 	}
 	
 	// Update is called once per frame
@@ -84,12 +95,10 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.F)) {
 			Chem();
 			OnButtonDown();
-//			Debug.Log("Hold F");
 		}
 
 		if (Input.GetKeyUp(KeyCode.F)) {
 			OnButtonUp();
-//			Debug.Log("release F");
 		}
 
 		if (Input.GetKeyDown(KeyCode.A)) {
@@ -132,7 +141,7 @@ public class PlayerController : MonoBehaviour {
 
 	void FixedUpdate() {
 		if (isDead) {
-			GetComponent<SpriteRenderer>().enabled = false;
+			spriteRenderer.enabled = false;
 			Reborn();
 			return;
 		}
@@ -152,8 +161,9 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 
-		if (animator.GetInteger("Died") != 0) Chay (0, 0); else
-		Chay(speed, GetComponent<Rigidbody2D>().velocity.y);
+		if (animator.GetInteger("Died") != 0) Chay (0, 0); 
+		else
+			Chay(speed, rigid2D.velocity.y);
 
 		grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
 
@@ -164,7 +174,7 @@ public class PlayerController : MonoBehaviour {
 			currentPosition = this.transform.position;
 		}
 		animator.SetBool("DoubleJump", doubleJump);
-		float verY = GetComponent<Rigidbody2D>().velocity.y;
+		float verY = rigid2D.velocity.y;
 		animator.SetFloat("verY", verY);
 
 		if (finishedChem) {
@@ -190,16 +200,15 @@ public class PlayerController : MonoBehaviour {
 		if (ItemData.UpCount > 0) {
 			isGameOver = false;
 
-			CameraController mainCam = FindObjectOfType<CameraController> ();
 			if (!grounded)
-				transform.position = new Vector3(transform.position.x, mainCam.transform.position.y + 3, transform.position.z);
+				transform.position = new Vector3(transform.position.x, camController.transform.position.y + 3, transform.position.z);
 
-			GetComponent<SpriteRenderer>().enabled = true;
-			GetComponent<Collider2D>().enabled = true;
+			spriteRenderer.enabled = true;
+			col2D.enabled = true;
 			animator.SetInteger("Died", 0);
 			animator.SetTrigger("Reborn");
-			HPController hpObject = FindObjectOfType<HPController>();
-			hpObject.IncreaseProcess(100);
+
+			hpController.IncreaseProcess(100);
 			isDead = false;
 			ItemData.AddUp(-1);
 			saved = false;
@@ -209,8 +218,8 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void GameOver () {
-		FindObjectOfType<CameraUpBGController>().ScrollSpeed = 0;
-		FindObjectOfType<CameraFrontBGController>().ScrollSpeed = 0;
+		camUp.ScrollSpeed = 0;
+		camFront.ScrollSpeed = 0;
 
 		isGameOver = true;
 		gameOverCanvas.transform.parent.gameObject.SetActive(true);
@@ -228,7 +237,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Chay(float vSpeed, float hSpeed) {
-		GetComponent<Rigidbody2D>().velocity = new Vector2(vSpeed, hSpeed);
+		rigid2D.velocity = new Vector2(vSpeed, hSpeed);
 	}
 
 	public void OnButtonDown() {
@@ -352,7 +361,7 @@ public class PlayerController : MonoBehaviour {
 
 		if (grounded || !doubleJump) {
 
-			GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpHeight);
+			rigid2D.velocity = new Vector2(rigid2D.velocity.x, jumpHeight);
 			animator.SetBool("Ground", false);
 
 			if (!doubleJump && !grounded) {
@@ -363,19 +372,15 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public Vector3 GetOffsetWithCurrent() {
-//		Debug.Log("OffsetWithCurrent: " + (transform.position - currentPosition));
-
 		return transform.position - currentPosition;
 	}
 
 	public void beAttacked(int damage) {
 		if (special) return;
 
-		HPController hpObject = FindObjectOfType<HPController>();
+		hpController.DecreaseProcess(damage);
 
-		hpObject.DecreaseProcess(damage);
-
-		if (Mathf.Abs(hpObject.GetProgress()) < 0.1f) {
+		if (Mathf.Abs(hpController.GetProgress()) < 0.1f) {
 			OutOfHP();
 		} else {
 			SoundManager.instance.PlaySingleByName(GameConst.PLAYER_INJURE_AUDIO);
@@ -384,19 +389,16 @@ public class PlayerController : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D coll) {
 		if (coll.gameObject.tag == "Ground") {
-			CameraController mainCam = FindObjectOfType<CameraController> ();
 			float groundPositionY = coll.gameObject.transform.position.y;
-			mainCam.SetPositionY(groundPositionY + GameConst.DIS_GROUND_CAM);
+			camController.SetPositionY(groundPositionY + GameConst.DIS_GROUND_CAM);
 		}
 	}
 
 	public void UseSpecialSkill() {
-//		transform.position = new Vector3(transform.position.x, 0.7f, transform.position.z);
 		special = true;
 		animator.SetBool("special", true);
-		CameraController cam = FindObjectOfType<CameraController>();
-		cam.setSpecial(1);
-		GetComponent<Rigidbody2D>().isKinematic = true;
+		camController.setSpecial(1);
+		rigid2D.isKinematic = true;
 
 		specialObj.SetActive(true);
 		speed = speed * 1.5f;
@@ -406,8 +408,7 @@ public class PlayerController : MonoBehaviour {
 	public void finishSpecialSkill() {
 		speed = speed / 1.5f;
 		upDown = false;
-		CameraController cam = FindObjectOfType<CameraController>();
-		cam.setSpecial(2);
+		camController.setSpecial(2);
 
 		specialObj.SetActive(false);
 	}
@@ -415,7 +416,7 @@ public class PlayerController : MonoBehaviour {
 	public void afterFinishSpecialSkill() {
 		special = false;
 		animator.SetBool("special", false);
-		GetComponent<Rigidbody2D>().isKinematic = false;
+		rigid2D.isKinematic = false;
 	}
 
 	public void Collect (Collectible item) {
@@ -430,13 +431,14 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void Save() {
-		FindObjectOfType<CameraUpBGController>().ScrollSpeed = 5;
-		FindObjectOfType<CameraFrontBGController>().ScrollSpeed = 10;
+		camUp.ScrollSpeed = 5;
+		camFront.ScrollSpeed = 10;
 		timeGoToGOV = 0;
 		saved = true;
 		isGameOver = false;
+
 		Time.timeScale = 1;
-		Chay(speed, GetComponent<Rigidbody2D>().velocity.y);
+		Chay(speed, rigid2D.velocity.y);
 		ItemData.AddUp(1);
 		Reborn();
 	}

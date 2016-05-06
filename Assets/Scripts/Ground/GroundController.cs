@@ -46,8 +46,6 @@ public class GroundController : MonoBehaviour {
 		}
 
 		//add end tiles
-
-
 	}
 
 	void SpawnFormation() {

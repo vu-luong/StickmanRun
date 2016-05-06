@@ -4,13 +4,13 @@ using UnityEngine.UI;
 
 public class ShopTextController : MonoBehaviour {
 
-	// Use this for initialization
+	private Text tex;
+
 	void Start () {
-	
+		tex = GetComponent<Text>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
-		GetComponent<Text>().text = DataPref.getNumData(GameConst.NUM_COLLECT_KEY).ToString();
+		tex.text = DataPref.getNumData(GameConst.NUM_COLLECT_KEY).ToString();
 	}
 }

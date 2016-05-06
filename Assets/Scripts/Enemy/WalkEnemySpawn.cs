@@ -10,11 +10,6 @@ public class WalkEnemySpawn : MonoBehaviour {
 	void Start () {
 		pos = ItemData.Pos;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
 	void OnDrawGizmos() {
 		Gizmos.DrawCube(transform.position, new Vector3(1, 1, 0));

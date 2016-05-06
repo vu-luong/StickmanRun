@@ -22,11 +22,6 @@ public class CameraFrontBGController : MonoBehaviour {
 		transform.position = startPosition + Vector3.right * newPosition;
 
 		transform.position = new Vector3(transform.position.x, mainCam.transform.position.y + 27.46748f, transform.position.z);
-
-//		float offsetY = FindObjectOfType<PlayerController>().GetOffsetWithCurrent().y;
-//		if (offsetY < 0) offsetY = 0; //Truong hop player bi roi xuong vuc
-//
-//		transform.position = transform.position + new Vector3(0, offsetY / 10, 0);
 	}
 
 	public float ScrollSpeed {

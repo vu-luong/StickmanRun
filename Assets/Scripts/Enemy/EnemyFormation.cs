@@ -5,15 +5,17 @@ public class EnemyFormation : MonoBehaviour {
 
 	public GameObject enemy;
 	public GameObject enemy2;
-	private PlayerController player;
 
 	private float timeGenerate = GameConst.TIME_GEN_ENEMY;
-
 	private float timeCount = 0;
+	private Rigidbody2D rigid2D;
+	private Rigidbody2D playerRigid2D;
+
 	// Use this for initialization
 	void Start () {
 		timeCount = 0;
-		player = FindObjectOfType<PlayerController> ();
+		playerRigid2D = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
+		rigid2D = GetComponent<Rigidbody2D>();
 	}
 	
 	// Update is called once per frame
@@ -40,7 +42,7 @@ public class EnemyFormation : MonoBehaviour {
 	}
 
 	void FollowPlayer() {
-		GetComponent<Rigidbody2D>().velocity = new Vector3(player.GetComponent<Rigidbody2D>().velocity.x, 0, 0);
+		rigid2D.velocity = new Vector3(playerRigid2D.velocity.x, 0, 0);
 	}
 
 }

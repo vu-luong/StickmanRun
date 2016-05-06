@@ -4,13 +4,19 @@ using System.Collections;
 public class BackWallSredded : MonoBehaviour {
 
 	public GameObject player;
-	
+	private Rigidbody2D rigid2D;
+
+
+	void Start() {
+		rigid2D = GetComponent<Rigidbody2D>();
+	}
+		
 	void Update () {
 		FollowPlayer();
 	}
 	
 	void FollowPlayer() {
-		GetComponent<Rigidbody2D>().velocity = new Vector3(player.GetComponent<Rigidbody2D>().velocity.x, 0, 0);
+		rigid2D.velocity = new Vector3(player.GetComponent<Rigidbody2D>().velocity.x, 0, 0);
 	}
 	
 	void OnTriggerExit2D(Collider2D col) {

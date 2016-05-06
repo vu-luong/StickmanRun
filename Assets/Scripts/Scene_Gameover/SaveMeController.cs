@@ -4,34 +4,32 @@ using UnityEngine.UI;
 
 public class SaveMeController : MonoBehaviour {
 
-	public GameObject player;
+	public PlayerController player;
 	public GameObject gameOverCanvas;
+
+	private Image image;
+	private Button button;
 
 	// Use this for initialization
 	void Start () {
+		image = GetComponent<Image>();
+		button = GetComponent<Button>();
 	}
-
-
 
 	// Update is called once per frame
 	void Update() {
 		if (DataPref.getNumData(GameConst.NUM_COLLECT_KEY) < ItemData.NumToSave) {
-			GetComponent<Image>().color = Color.gray;
-			GetComponent<Button>().enabled = false;
+			image.color = Color.gray;
+			button.enabled = false;
 		} else {
-			GetComponent<Image>().color = Color.white;
-			GetComponent<Button>().enabled = true;
+			image.color = Color.white;
+			button.enabled = true;
 		}
-
 	}
 
-
 	public void OnClick () {
-//		Debug.Log("Reborn");
-//		ItemData.AddUp(1);
 		if (DataPref.getNumData(GameConst.NUM_COLLECT_KEY) < ItemData.NumToSave) return;
-
-		player.GetComponent<PlayerController>().Save();
+		player.Save();
 		gameOverCanvas.SetActive(false);
 		DataPref.addNumData(GameConst.NUM_COLLECT_KEY, -ItemData.NumToSave);
 		ItemData.AddNumToSave(ItemData.NumToSave);

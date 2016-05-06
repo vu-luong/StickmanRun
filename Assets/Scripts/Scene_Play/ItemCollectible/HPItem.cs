@@ -3,21 +3,17 @@ using System.Collections;
 
 public class HPItem : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	private HPController hpController;
 
+	void Start() {
+		hpController = GameObject.Find("HP_mid").GetComponent<HPController>();
+	}
+	
 	void OnTriggerEnter2D(Collider2D other) {
 		string tag = other.gameObject.tag;
 		if (tag == "Player") {
-			HPController hpObject = FindObjectOfType<HPController>();
-			hpObject.IncreaseProcess(40);
+			
+			hpController.IncreaseProcess(40);
 			Destroy(gameObject);
 		}
 	}

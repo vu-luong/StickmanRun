@@ -4,12 +4,14 @@ using UnityEngine.UI;
 
 public abstract class ItemCount : MonoBehaviour {
 
+	protected Text tex;
+
 	// Use this for initialization
 	void Start () {
+		tex = GetComponent<Text>();
 		SetCountToText();
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		SetCountToText();
 	}
@@ -18,7 +20,7 @@ public abstract class ItemCount : MonoBehaviour {
 
 	void SetCountToText() {
 		int count = GetItemCount();
-		GetComponent<Text>().text = "" + count;
+		tex.text = "" + count;
 	}
 }
 

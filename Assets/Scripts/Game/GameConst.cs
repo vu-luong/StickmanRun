@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class GameConst : MonoBehaviour {
+public class GameConst {
 	public static int SURIKEN_COST = 60;
 	public static int DRAGON_COST = 100;
 	public static int HP_COST = 200;

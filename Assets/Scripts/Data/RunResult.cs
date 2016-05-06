@@ -5,11 +5,13 @@ using UnityEngine.UI;
 public class RunResult : MonoBehaviour {
 		
 	int count, maxCount, unit;
+	private Text tex;
 
 	// Use this for initialization
 	void Start () {
 		count = 0;
-		this.GetComponent<Text>().text = count + " M";
+		tex = GetComponent<Text>();
+		tex.text = count + " M";
 		maxCount = DistanceController.runDistance;
 		unit = maxCount / GameConst.TIME_INC_ANIM;
 	}
@@ -23,7 +25,7 @@ public class RunResult : MonoBehaviour {
 			count = maxCount;
 		}
 
-		this.GetComponent<Text>().text = count + " M";
+		tex.text = count + " M";
 
 	}
 }

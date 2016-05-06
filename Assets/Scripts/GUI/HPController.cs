@@ -12,11 +12,4 @@ public class HPController : ProgressBar {
 	
 	#endregion
 	
-	// Update is called once per frame
-	
-	void Update () {
-		if (Input.GetKeyDown(KeyCode.Space)) {
-			DecreaseProcess(20);
-		}
-	}
 }

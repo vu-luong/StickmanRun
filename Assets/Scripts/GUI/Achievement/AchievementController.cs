@@ -55,10 +55,4 @@ public class AchievementController : MonoBehaviour {
 		else achievement5.SetActive(false);
 	}
 
-	void Update() {
-		if (Input.GetKeyDown(KeyCode.P)) {
-			DataPref.setNumData(GameConst.BEST_DISTANCE_KEY, 10000);
-		}
-	}
-
 }

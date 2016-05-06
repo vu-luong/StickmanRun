@@ -7,7 +7,6 @@ public class UpItem : MonoBehaviour {
 		string tag = other.gameObject.tag;
 		if (tag == "Player") {
 			ItemData.AddUp(1);
-
 			Destroy(gameObject);
 		}
 	}

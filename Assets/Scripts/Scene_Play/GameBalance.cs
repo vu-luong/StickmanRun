@@ -10,6 +10,7 @@ public class GameBalance : MonoBehaviour {
 	public GameObject specialItemSpawn;
 	public GameObject kunaiItemSpawn;
 	public GameObject upItemSpawn;
+	public BossFormation bossFormation;
 
 	public float distance;
 	private bool notGenBoss = true;
@@ -104,7 +105,7 @@ public class GameBalance : MonoBehaviour {
 	}
 
 	public void GenBoss () {
-		FindObjectOfType<BossFormation>().BossAppear();
+		bossFormation.BossAppear();
 	}
 
 	public void EnemyDieTrigger(string tag) {

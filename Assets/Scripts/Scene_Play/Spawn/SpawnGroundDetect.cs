@@ -3,16 +3,18 @@ using System.Collections;
 
 public class SpawnGroundDetect : MonoBehaviour {
 
-	private PlayerController player;
+	private Rigidbody2D playerRigid2D;
+	private Rigidbody2D rigid2D;
 
 	// Use this for initialization
 	void Start () {
-		player = FindObjectOfType<PlayerController>();
+		playerRigid2D = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
+		rigid2D = GetComponent<Rigidbody2D>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		GetComponent<Rigidbody2D>().velocity = new Vector3(player.GetComponent<Rigidbody2D>().velocity.x, 0, 0);
+		rigid2D.velocity = new Vector3(playerRigid2D.velocity.x, 0, 0);
 	}
 
 }

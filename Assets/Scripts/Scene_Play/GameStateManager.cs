@@ -8,12 +8,6 @@ public class GameStateManager : MonoBehaviour {
 	public GameObject shopCanvas;
 	public GameObject image;
 
-	void Update() {
-		if (Input.GetKeyDown(KeyCode.P)) {
-			OnPause();
-		}
-	}
-
 	public void OnPause() {
 		Time.timeScale = 0;
 		buttonCanvas.SetActive(false);
@@ -38,7 +32,7 @@ public class GameStateManager : MonoBehaviour {
 
 	public void GoToGameOver() {
 		ItemData.ResetCount();
-		SceneManager.LoadScene("GameOver");
+		SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
 	}
 
 }

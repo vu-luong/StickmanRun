@@ -43,7 +43,6 @@ public abstract class Enemy : MonoBehaviour {
 			playerController.beAttacked(20);
 			attackedPlayer = true;
 		}
-
 		Move();
 	}
 
@@ -60,7 +59,6 @@ public abstract class Enemy : MonoBehaviour {
 		string tag = col.gameObject.tag;
 
 		// _tagname: tag after trigger, to avoid trigger with an obj twice;
-
 		if (tag == "Dragon" || tag == "Chuong" || tag == "PlayerBigKunai" || tag == "PlayerBigSlash" || 
 			tag == "_PlayerBigKunai" || tag == "_PlayerBigSlash" ||  tag == "_Dragon" || tag == "_Chuong") {
 			HP -= GetPlayerPower(tag);

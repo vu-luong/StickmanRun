@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ItemData : MonoBehaviour {
+public class ItemData {
 
 	private static int surikenCount;
 	private static int dragonCount;
