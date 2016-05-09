@@ -9,7 +9,7 @@ public class GameOverStateManager : MonoBehaviour {
 	}
 
 	public void gotoPlayScene() {
-		string name = HomeStateManager.GetSceneName();
+//		string name = HomeStateManager.GetSceneName();
 		SceneManager.LoadScene("Story", LoadSceneMode.Single);
 	}
 }

@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour {
 	public HPController hpController;
 	public CameraUpBGController camUp;
 	public CameraFrontBGController camFront;
+	public GameObject magnetObj;
 
 	public Transform groundCheck;
 	public LayerMask whatIsGround;
@@ -134,7 +135,13 @@ public class PlayerController : MonoBehaviour {
 		}
 	
 		if (ItemData.TimeMagnetCount > 0) {
+			if (!magnetObj.activeInHierarchy) magnetObj.SetActive(true);
+
 			ItemData.AddTimeMagnet(-Time.deltaTime);
+			if (ItemData.TimeMagnetCount <= 0) {
+				Debug.Log("Het time magnet");
+				magnetObj.SetActive(false);
+			}
 		}
 
 	}
@@ -379,6 +386,7 @@ public class PlayerController : MonoBehaviour {
 		if (special) return;
 
 		hpController.DecreaseProcess(damage);
+		SoundManager.instance.Vibrate();
 
 		if (Mathf.Abs(hpController.GetProgress()) < 0.1f) {
 			OutOfHP();

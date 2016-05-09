@@ -12,6 +12,8 @@ public class HelpStateManager : MonoBehaviour {
 
 	public void MoveToStartScene() {
 		if (isBtnStartClicked) return;
+		Debug.Log("click start button");
+
 		isBtnStartClicked = true;
 		SoundManager.instance.PlaySingleByName(GameConst.BUTTON_CLICK_AUDIO);
 		StartCoroutine(LoadNewScene());
