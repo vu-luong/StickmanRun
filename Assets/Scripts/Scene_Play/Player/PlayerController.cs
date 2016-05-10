@@ -273,7 +273,7 @@ public class PlayerController : MonoBehaviour {
 
 	public void Chem() {
 		if (special) return;
-		SoundManager.instance.PlaySingleByName(GameConst.PLAYER_CHEM_AUDIO);
+//		SoundManager.instance.PlaySingleByName(GameConst.PLAYER_CHEM_AUDIO);
 
 		if (!isChem1 && !isChem2) {
 			animator.SetTrigger("SwordAttack");

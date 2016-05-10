@@ -7,6 +7,8 @@ public class GameStateManager : MonoBehaviour {
 	public GameObject buttonCanvas;
 	public GameObject shopCanvas;
 	public GameObject image;
+	public GameObject completeCanvas;
+	public GameObject buyCanvas;
 
 	public void OnPause() {
 		Time.timeScale = 0;
@@ -27,6 +29,9 @@ public class GameStateManager : MonoBehaviour {
 
 	public void CloseShop() {
 		shopCanvas.SetActive(false);
+		completeCanvas.SetActive(false);
+		buyCanvas.SetActive(true);
+
 		OnUnpause();
 	}
 

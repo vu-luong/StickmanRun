@@ -79,6 +79,7 @@ public class SoundManager : MonoBehaviour {
 
 	public void Vibrate() {
 		if (DataPref.getNumData(GameConst.VIBRATE_KEY) == 1) return;
-		Handheld.Vibrate();
+//		Handheld.Vibrate();
+		Vibration.Vibrate(50);
 	}
 }

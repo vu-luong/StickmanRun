@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System;
 
 public class HomeStateManager : MonoBehaviour {
 	public GameObject shopCanvas;
 	public GameObject achievementCanvas;
 	public GameObject settingCanvas;
 	public GameObject loadingText;
+	public GameObject completeCanvas;
+	public GameObject buyCanvas;
 
 	public void ShowSetting() {
 		SoundManager.instance.PlaySingleByName(GameConst.BUTTON_CLICK_AUDIO);
@@ -30,6 +33,8 @@ public class HomeStateManager : MonoBehaviour {
 	public void CloseShop() {
 		SoundManager.instance.PlaySingleByName(GameConst.BUTTON_CLICK_AUDIO);
 		shopCanvas.SetActive(false);
+		completeCanvas.SetActive(false);
+		buyCanvas.SetActive(true);
 		OnUnpause();
 	}
 
@@ -79,9 +84,30 @@ public class HomeStateManager : MonoBehaviour {
 	}
 
 	public static string GetSceneName() {
-		int a = Random.Range(0, 5);
+		int a = UnityEngine.Random.Range(0, 5);
 
 		return "Play" + a;
-
 	}
+
+	private const string FACEBOOK_APP_ID = "796747923679740";
+	private const string FACEBOOK_URL = "http://www.facebook.com/dialog/feed";
+
+	public void Share() {
+		string appStoreLink = "https://play.google.com/store/apps/details?id=com.zitga.TowerDefense";
+		string facebookshare = "https://www.facebook.com/sharer/sharer.php?u=" + Uri.EscapeUriString(appStoreLink);
+		Application.OpenURL(facebookshare);
+//		ShareToFacebook(appStoreLink, "tower defense", "blabla", "blabla", null, null);
+	}
+
+
+//	void ShareToFacebook (string linkParameter, string nameParameter, string captionParameter, string descriptionParameter, string pictureParameter, string redirectParameter)
+//	{
+//		Application.OpenURL (FACEBOOK_URL + "?app_id=" + FACEBOOK_APP_ID +
+//			"&link=" + WWW.EscapeURL(linkParameter) +
+//			"&name=" + WWW.EscapeURL(nameParameter) +
+//			"&caption=" + WWW.EscapeURL(captionParameter) + 
+//			"&description=" + WWW.EscapeURL(descriptionParameter) + 
+//			"&picture=" + WWW.EscapeURL(pictureParameter) + 
+//			"&redirect_uri=" + WWW.EscapeURL(redirectParameter));
+//	}
 }
