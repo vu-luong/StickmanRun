@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using admob;
 
 public class PlayerController : MonoBehaviour {
 
@@ -19,8 +20,11 @@ public class PlayerController : MonoBehaviour {
 	public CameraUpBGController camUp;
 	public CameraFrontBGController camFront;
 	public GameObject magnetObj;
+	public GameObject rebornEffect;
+	public GameObject BaKunai;
 
 	public Transform groundCheck;
+	public Transform rightCheck;
 	public LayerMask whatIsGround;
 
 	private float speed = GameConst.PLAYER_SPEED;
@@ -61,9 +65,11 @@ public class PlayerController : MonoBehaviour {
 	public bool saved;
 
 	private bool cantChuong, cantDragon;
+	private bool battu;
 
 	// Use this for initialization
 	void Start () {
+
 		timeButtonHolding = 0;
 		timeGoToGOV = 0;
 		ButtonHolding = false;
@@ -73,6 +79,7 @@ public class PlayerController : MonoBehaviour {
 //		Debug.Log (GetComponent<Rigidbody2D>().gravityScale);
 		special = false;
 		upDown = false;
+		battu = false;
 
 		specialObj.SetActive(false);
 
@@ -171,8 +178,17 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		if (animator.GetInteger("Died") != 0) Chay (0, 0); 
-		else
+		else {
+
+			bool right = Physics2D.OverlapCircle(rightCheck.position, groundRadius, whatIsGround);
+
+			if (right && !special) {
+				Debug.Log("Den day roi");
+				Chay(0, rigid2D.velocity.y);
+			} else
+
 			Chay(speed, rigid2D.velocity.y);
+		}
 
 		grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
 
@@ -217,16 +233,33 @@ public class PlayerController : MonoBehaviour {
 			animator.SetInteger("Died", 0);
 			animator.SetTrigger("Reborn");
 
+			battu = true;
+			rebornEffect.SetActive(true);
+
+			GameObject bbb = Instantiate(BaKunai, transform.position, Quaternion.identity) as GameObject;
+			bbb.GetComponent<Rigidbody2D>().velocity = new Vector3(kunaiSpeed, 0, 0);
+
+			CancelInvoke("HetBatTu");
+			Invoke("HetBatTu", 4);
+
 			hpController.IncreaseProcess(100);
 			isDead = false;
 			ItemData.AddUp(-1);
 			saved = false;
 		} else
 			GameOver();
-	
+	}
+
+	void HetBatTu() {
+		battu = false;
+		rebornEffect.SetActive(false);
 	}
 
 	void GameOver () {
+		if (!GameConst.IS_TEST) {
+			Admob.Instance().showBannerRelative(AdSize.Banner, AdPosition.BOTTOM_CENTER, 0);
+		}
+
 		camUp.ScrollSpeed = 0;
 		camFront.ScrollSpeed = 0;
 
@@ -402,14 +435,18 @@ public class PlayerController : MonoBehaviour {
 	public void beAttacked(int damage) {
 		if (special) return;
 
-		hpController.DecreaseProcess(damage);
-		SoundManager.instance.Vibrate();
-
-		if (Mathf.Abs(hpController.GetProgress()) < 0.1f) {
-			OutOfHP();
-		} else {
-			SoundManager.instance.PlaySingleByName(GameConst.PLAYER_INJURE_AUDIO);
+		if (damage < 100 && battu == true) {
+			
+		} else{
+			hpController.DecreaseProcess(damage);
+			SoundManager.instance.Vibrate();
+			if (Mathf.Abs(hpController.GetProgress()) < 0.1f) {
+				OutOfHP();
+			} else {
+				SoundManager.instance.PlaySingleByName(GameConst.PLAYER_INJURE_AUDIO);
+			}
 		}
+
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {

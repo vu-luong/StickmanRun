@@ -18,6 +18,13 @@ public class BestDistance : MonoBehaviour {
 			DataPref.setNumData(GameConst.BEST_DISTANCE_KEY, bestDistance);
 		}
 
+		if (!GameConst.IS_TEST) {
+			Social.ReportScore(bestDistance, "CgkI3tfW-NMLEAIQBQ", (bool success) => {
+				// handle success or failure
+				Debug.Log("status post score: " + success);
+			});
+		}
+
 		count = 0;
 		tex = GetComponent<Text>();
 

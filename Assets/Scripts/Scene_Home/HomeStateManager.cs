@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using System;
 using admob;
+//using GooglePlayGames;
+using UnityEngine.SocialPlatforms;
 
 public class HomeStateManager : MonoBehaviour {
 	public GameObject shopCanvas;
@@ -18,7 +20,14 @@ public class HomeStateManager : MonoBehaviour {
 			Debug.Log("init admob");
 //			Admob.Instance().setTesting(true);
 //			Admob.Instance().setForChildren(true);
-			Admob.Instance().loadInterstitial(); 	
+			Admob.Instance().loadInterstitial(); 
+
+			// authenticate user:
+			Social.localUser.Authenticate((bool success) => {
+				// handle success or failure
+				Debug.Log("status authen: " + success);
+			});
+
 		}
 	}
 
@@ -166,5 +175,12 @@ public class HomeStateManager : MonoBehaviour {
 //		{
 //			Admob.Instance().showBannerRelative(AdSize.Banner, AdPosition.BOTTOM_CENTER, 0);
 //		}
+	}
+
+
+	public void OnShowLeaderBoardClick() {
+		if (!GameConst.IS_TEST) {
+			Social.ShowLeaderboardUI();
+		}
 	}
 }

@@ -10,7 +10,9 @@ public class UpItem : MonoBehaviour {
 		if (tag == "Player") {
 			ItemData.AddUp(1);
 
-			Instantiate(effect, transform.position + new Vector3(0.5f, 1, 0), Quaternion.identity);
+			GameObject ef = Instantiate(effect, transform.position + new Vector3(0.5f, 1, 0), Quaternion.identity) as GameObject;
+			GameObject cam = GameObject.Find("Main Camera");
+			ef.transform.SetParent(cam.transform);
 
 			Destroy(gameObject);
 		}

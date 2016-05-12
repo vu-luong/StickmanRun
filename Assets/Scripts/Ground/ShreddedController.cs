@@ -18,7 +18,7 @@ public class ShreddedController : MonoBehaviour {
 		if (col.gameObject.tag == "Player") {
 			player.GetComponent<PlayerController>().beAttacked(100);
 		} else
-		if (col.gameObject.tag != "Shredded")
+			if (col.gameObject.tag != "Shredded" && col.gameObject.tag != "PlayerSlash")
 			Destroy(col.gameObject);
 	}
 

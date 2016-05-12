@@ -7,6 +7,8 @@ public class BossFormation : MonoBehaviour {
 	public GameObject[] bosses;
 	public GameObject bossHPBG;
 	public GameObject bossHPProgress;
+	public GameObject[] bonuses;
+	private int countBoss;
 
 	private int bossHPBalance;
 
@@ -31,6 +33,7 @@ public class BossFormation : MonoBehaviour {
 	void Start () {
 		pos = ItemData.Pos;
 		bossHPBalance = 150;
+		countBoss = 0;
 	}
 	
 	void OnDrawGizmos() {
@@ -38,6 +41,8 @@ public class BossFormation : MonoBehaviour {
 	}
 
 	public void BossAppear() {
+		countBoss++;
+
 		bossHPBalance += 50;
 		GameObject bossObj = Instantiate(bosses[pos], new Vector3(3.49f, -2.05f, 1), Quaternion.identity) as GameObject;
 		bossObj.transform.parent = transform.parent;
@@ -61,5 +66,15 @@ public class BossFormation : MonoBehaviour {
 
 	void Victory() {
 		SceneManager.LoadScene("Victory");
+	}
+
+	public void Bonus1Appear() {
+		if (countBoss == 1) {
+			Instantiate(bonuses[0], new Vector3(transform.position.x - 10, -5.85f, 0), Quaternion.identity);
+		} else {
+			int r = Random.Range(1, bonuses.Length);
+			Instantiate(bonuses[r], new Vector3(transform.position.x - 10, -5.85f, 0), Quaternion.identity);	
+		}
+
 	}
 }

@@ -74,6 +74,7 @@ public class Boss1Controller : Enemy {
 	#region implemented abstract members of Enemy
 	protected override void Bonus () {
 		//TODO
+		bossFormation.Bonus1Appear();
 	}
 	#endregion
 }

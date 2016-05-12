@@ -34,6 +34,7 @@ public class GameBalance : MonoBehaviour {
 	private int minPeriodTimeSpawnFire = 8;
 	private int maxPeriodTimeSpawnFire = 13;
 
+
 	// Use this for initialization
 	void Start () {
 
@@ -67,7 +68,7 @@ public class GameBalance : MonoBehaviour {
 
 		if (timeSpawnWalkEnemy > timeSpawnWalkEnemyPeriod) {
 			timeSpawnWalkEnemyPeriod -= 0.07f;
-			if (timeSpawnWalkEnemyPeriod <= 1) timeSpawnWalkEnemyPeriod = 1;
+			if (timeSpawnWalkEnemyPeriod <= 1.5f) timeSpawnWalkEnemyPeriod = 1.5f;
 
 			Instantiate(walkEnemySpawn, transform.position + offsetWalkEnemySpawn, Quaternion.identity);
 			timeSpawnWalkEnemy = 0;
@@ -107,7 +108,7 @@ public class GameBalance : MonoBehaviour {
 
 	public void SetDistance (float distance) {
 		this.distance = distance;
-		if (distance >= 1000 && notGenBoss == true) {
+		if (distance >= 2000 && notGenBoss == true) {
 			GenBoss();
 			notGenBoss = false;
 		}

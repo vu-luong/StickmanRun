@@ -39,6 +39,7 @@ public class GroundController : MonoBehaviour {
 				groundTileObject = Instantiate(groundTiles[pos], transform.position + offset, Quaternion.identity) as GameObject;
 			} else {
 				groundTileObject = Instantiate(groundChongs[pos], transform.position + offset, Quaternion.identity) as GameObject;
+
 			}
 
 			groundTileObject.transform.parent = transform;
@@ -58,10 +59,13 @@ public class GroundController : MonoBehaviour {
 		GameObject groundFormationObject = Instantiate(groundFormation, transform.position + offset, Quaternion.identity) as GameObject;
 		groundFormationObject.transform.parent = transform;
 
-		Instantiate(chong1, 
-        	new Vector3(transform.position.x + (numberOfTiles + 0.5f)  * tileWidth - 0.5f, -2.0f 
-				+ Mathf.Min(transform.position.y, transform.position.y + y), 0), 
-          				Quaternion.identity);
+		int r = Random.Range(0, 2);
+		if (r == 1 && DistanceController.RunDistance > 1800) {
+			Instantiate(chong1, 
+				new Vector3(transform.position.x + (numberOfTiles + 0.5f)  * tileWidth - 0.5f, -2.0f 
+					+ Mathf.Min(transform.position.y, transform.position.y + y), 0), 
+				Quaternion.identity);			
+		}
 
 	}
 }

@@ -12,7 +12,7 @@ public class HelpStateManager : MonoBehaviour {
 	void Start() {
 		isBtnStartClicked = false;
 		if (!GameConst.IS_TEST) {
-			Admob.Instance().showBannerRelative(new AdSize(390, 55), AdPosition.BOTTOM_LEFT, 40);
+			Admob.Instance().showBannerRelative(new AdSize(415, 55), AdPosition.BOTTOM_LEFT, 40);
 		}
 	}
 
