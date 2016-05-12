@@ -5,6 +5,15 @@ using UnityEngine.UI;
 public class DistanceController : MonoBehaviour {
 	public static int runDistance;
 
+	public static int RunDistance {
+		get {
+			return runDistance;
+		}
+		set {
+			runDistance = value;
+		}
+	}
+
 	private Text tex;
 
 	void Start() {

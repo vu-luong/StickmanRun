@@ -26,7 +26,7 @@ public class GroundController : MonoBehaviour {
 	void SpawnGround() {
 		// add begin tiles
 
-		int r = Random.Range(2, numberOfTiles - 1);
+		int r = Random.Range(2, numberOfTiles - 4);
 
 		for (int i = 1; i <= numberOfTiles; i++) {
 			Vector3 offset = new Vector3((i - 1) * tileWidth, 0, 0);

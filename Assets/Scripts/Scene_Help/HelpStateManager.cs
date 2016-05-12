@@ -1,21 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using admob;
 
 public class HelpStateManager : MonoBehaviour {
 
 	public GameObject loadingText;
 	private bool isBtnStartClicked;
+
+
 	void Start() {
 		isBtnStartClicked = false;
+		if (!GameConst.IS_TEST) {
+			Admob.Instance().showBannerRelative(new AdSize(390, 55), AdPosition.BOTTOM_LEFT, 40);
+		}
 	}
 
 	public void MoveToStartScene() {
 		if (isBtnStartClicked) return;
 //		Debug.Log("click start button");
-
 		isBtnStartClicked = true;
+
 		SoundManager.instance.PlaySingleByName(GameConst.BUTTON_CLICK_AUDIO);
+		SoundManager.instance.Vibrate();
+
 		StartCoroutine(LoadNewScene());
 	}
 

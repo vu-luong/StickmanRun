@@ -11,4 +11,13 @@ public class CollectibleBlue : Collectible {
 	}
 	
 	#endregion
+
+	#region implemented abstract members of Collectible
+
+	protected override void AddItem ()
+	{
+		ItemData.AddChuong(1);
+	}
+
+	#endregion
 }

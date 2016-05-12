@@ -44,10 +44,12 @@ public class SettingController : MonoBehaviour {
 			DataPref.setNumData(GameConst.MUSIC_KEY, 1);
 			music_on.SetActive(false);
 			music_off.SetActive(true);
+			SoundManager.instance.StopMusic();
 		} else {
 			DataPref.setNumData(GameConst.MUSIC_KEY, 0);
 			music_on.SetActive(true);
 			music_off.SetActive(false);
+			SoundManager.instance.PlayMusic(GameConst.HOME_MUSIC);
 		}
 	}
 

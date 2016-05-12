@@ -8,6 +8,14 @@ public class BossFormation : MonoBehaviour {
 	public GameObject bossHPBG;
 	public GameObject bossHPProgress;
 
+	private int bossHPBalance;
+
+	public int BossHPBalance {
+		get {
+			return bossHPBalance;
+		}
+	}
+
 	public GameObject BossHPProgress {
 		get {
 			return bossHPProgress;
@@ -22,6 +30,7 @@ public class BossFormation : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		pos = ItemData.Pos;
+		bossHPBalance = 150;
 	}
 	
 	void OnDrawGizmos() {
@@ -29,6 +38,7 @@ public class BossFormation : MonoBehaviour {
 	}
 
 	public void BossAppear() {
+		bossHPBalance += 50;
 		GameObject bossObj = Instantiate(bosses[pos], new Vector3(3.49f, -2.05f, 1), Quaternion.identity) as GameObject;
 		bossObj.transform.parent = transform.parent;
 

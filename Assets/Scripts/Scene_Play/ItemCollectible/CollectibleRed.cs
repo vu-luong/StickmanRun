@@ -14,4 +14,12 @@ public class CollectibleRed : Collectible {
 
 
 
+
+
+	#region implemented abstract members of Collectible
+	protected override void AddItem ()
+	{
+		ItemData.AddDragon(1);
+	}
+	#endregion
 }

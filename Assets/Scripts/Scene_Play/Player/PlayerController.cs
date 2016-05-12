@@ -60,6 +60,8 @@ public class PlayerController : MonoBehaviour {
 
 	public bool saved;
 
+	private bool cantChuong, cantDragon;
+
 	// Use this for initialization
 	void Start () {
 		timeButtonHolding = 0;
@@ -273,7 +275,7 @@ public class PlayerController : MonoBehaviour {
 
 	public void Chem() {
 		if (special) return;
-//		SoundManager.instance.PlaySingleByName(GameConst.PLAYER_CHEM_AUDIO);
+		SoundManager.instance.PlaySingleByName(GameConst.PLAYER_CHEM_AUDIO);
 
 		if (!isChem1 && !isChem2) {
 			animator.SetTrigger("SwordAttack");
@@ -326,23 +328,38 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void UseDragonSkill() {
-		if (special) return;
-//		if (ItemData.DragonCount <= 0) return;
+		if (special || cantDragon) return;
+		if (ItemData.DragonCount <= 0) return;
 
+		SoundManager.instance.PlaySingleByName(GameConst.DRAGON_AUDIO);
+		cantDragon = true;
 		ItemData.AddDragon(-1);
 
 		Vector3 pos = new Vector3(transform.position.x - 10, 0, transform.position.z);
 		Instantiate(dragonSkill, pos, Quaternion.identity);
+		Invoke("CanDragon", 2.0f);
+	}
+
+	void CanChuong() {
+		cantChuong = false;
 	}
 
 	public void UseChuongSkill() {
-		if (special) return;
-//		if (ItemData.ChuongCount <= 0) return;
+		if (special || cantChuong) return;
+		if (ItemData.ChuongCount <= 0) return;
+
+		SoundManager.instance.PlaySingleByName(GameConst.CHUONG_AUDIO);
+		cantChuong = true;
 		ItemData.AddChuong(-1);
 
 		if (grounded) animator.SetTrigger("Chuong");
 		Vector3 pos = new Vector3(transform.position.x + GameConst.CHUONG_OFFSET_X, transform.position.y + GameConst.CHUONG_OFFSET_Y, transform.position.z);
 		Instantiate(chuongSkill, pos, Quaternion.identity);
+		Invoke("CanChuong", 1);
+	}
+
+	void CanDragon() {
+		cantDragon = false;
 	}
 
 	public void LaunchBigSlash() {

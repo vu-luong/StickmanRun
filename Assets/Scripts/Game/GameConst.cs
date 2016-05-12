@@ -2,6 +2,9 @@ using UnityEngine;
 using System.Collections;
 
 public class GameConst {
+
+	public static bool IS_TEST = false;
+
 	public static int SURIKEN_COST = 60;
 	public static int DRAGON_COST = 100;
 	public static int HP_COST = 200;
@@ -59,7 +62,14 @@ public class GameConst {
 	public static string PLAYER_DEAD_AUDIO = "player dead";
 	public static string PLAYER_CHEM_AUDIO = "player chem";
 	public static string BUTTON_CLICK_AUDIO = "button click";
+	public static string COLLECT_AUDIO = "collect audio";
+	public static string BUY_AUDIO = "buy audio";
+	public static string CHUONG_AUDIO = "chuong audio";
+	public static string DRAGON_AUDIO = "dragon audio";
 
+	public static string HOME_MUSIC = "home music";
+	public static string STORY_MUSIC = "story music";
+	public static string PLAY_MUSIC = "play music";
 
 	public static string SPAWN_BALANCE_TAG = "SpawnBalanceDetect";
 }

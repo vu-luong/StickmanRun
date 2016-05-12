@@ -4,6 +4,7 @@ using System.Collections;
 public abstract class Enemy : MonoBehaviour {
 	
 	public bool isDead;
+	public GameObject[] fires;
 	protected float speed;
 	protected bool attackedPlayer = false;
 	protected int HP;
@@ -18,6 +19,7 @@ public abstract class Enemy : MonoBehaviour {
 	protected Animator animator;
 	protected Collider2D col2D;
 	protected Rigidbody2D rigid2D;
+	private bool bonus;
 
 	protected virtual void Start () {
 		isDead = false;
@@ -28,6 +30,7 @@ public abstract class Enemy : MonoBehaviour {
 		animator = GetComponent<Animator>();
 		col2D = GetComponent<Collider2D>();
 		rigid2D = GetComponent<Rigidbody2D>();
+		bonus = false;
 
 		InitSpeed();
 		InitHP();
@@ -36,6 +39,7 @@ public abstract class Enemy : MonoBehaviour {
 	protected virtual void Update () {
 		if (isDead) {
 			gameBalance.EnemyDieTrigger(gameObject.tag);
+
 			Destroy(gameObject);
 		}
 		
@@ -75,10 +79,16 @@ public abstract class Enemy : MonoBehaviour {
 
 		if (HP <= 0) {
 			animator.SetBool("Die", true);
+			if (!bonus) {
+				bonus = true;
+				Bonus();
+			}
 			if (rigid2D != null) rigid2D.gravityScale = 1;
 		}
 
 	}
+
+	protected abstract void Bonus();
 
 	private int GetPlayerPower(string tag) {
 		if (tag == "PlayerSlash") return GameConst.PLAYER_SLASH_POWER;

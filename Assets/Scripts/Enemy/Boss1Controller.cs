@@ -12,7 +12,8 @@ public class Boss1Controller : Enemy {
 	private BossHPProgress bossHPProgress;
 
 	protected override void InitHP () {
-		HP = 200;
+		this.HP = bossFormation.BossHPBalance;
+//		Debug.Log(HP);
 		fullHP = HP;
 	}
 
@@ -23,9 +24,10 @@ public class Boss1Controller : Enemy {
 	}
 
 	protected override void Start() {
-		base.Start();
 		bossFormation = GameObject.Find("BossFormation").GetComponent<BossFormation>();
 		bossHPProgress = bossFormation.BossHPProgress.GetComponent<BossHPProgress>();
+
+		base.Start();
 
 		UseChuong();
 	}
@@ -34,8 +36,10 @@ public class Boss1Controller : Enemy {
 		if (isDead) {
 			bossFormation.BossHPDisappear();
 			//TODO- 
-			//			if (DistanceController.runDistance > 50000)
-			//				b.ToVictory();
+			if (DistanceController.RunDistance > 50000) {
+				Invoke("Victory", 1);
+				return;
+			}
 
 			/* trigger su kien xuat hien boss tiep theo */
 			// GameBalance -> appearNextBoss();
@@ -44,6 +48,11 @@ public class Boss1Controller : Enemy {
 		base.Update();
 
 		if (bossHPProgress != null) bossHPProgress.SetProgress(Mathf.Max((int)((HP*1.0f/fullHP)*100), 0));
+	}
+
+	public void Victory() {
+		GameStateManager gameStateManager = GameObject.Find("GameStateManager").GetComponent<GameStateManager>();
+		gameStateManager.GoToVictory();
 	}
 
 	public void UseChuong() {
@@ -62,4 +71,9 @@ public class Boss1Controller : Enemy {
 		base.OnTriggerEnter2D(col);
 	}
 
+	#region implemented abstract members of Enemy
+	protected override void Bonus () {
+		//TODO
+	}
+	#endregion
 }

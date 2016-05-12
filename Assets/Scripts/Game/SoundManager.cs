@@ -5,7 +5,10 @@ using System.Collections.Generic;
 public class SoundManager : MonoBehaviour {
 
 	public AudioSource efxSource;                   //Drag a reference to the audio source which will play the sound effects.
-	public AudioSource musicSource;                 //Drag a reference to the audio source which will play the music.
+	public AudioSource homeMusicSource;                 //Drag a reference to the audio source which will play the music.
+	public AudioSource storyMusicSource;
+	public AudioSource playMusicSource;
+
 	public static SoundManager instance = null;     //Allows other scripts to call functions from SoundManager.             
 	public float lowPitchRange = .95f;              //The lowest a sound effect will be randomly pitched.
 	public float highPitchRange = 1.05f;            //The highest a sound effect will be randomly pitched.
@@ -15,6 +18,10 @@ public class SoundManager : MonoBehaviour {
 	public AudioClip PlayerDeadAudio;
 	public AudioClip chemAudio;
 	public AudioClip buttonClickAudio;
+	public AudioClip collectAudio;
+	public AudioClip buyCompletedAudio;
+	public AudioClip chuongAudio;
+	public AudioClip dragonAudio;
 
 	Dictionary <string, AudioClip> map;
 
@@ -27,6 +34,10 @@ public class SoundManager : MonoBehaviour {
 			map.Add(GameConst.PLAYER_DEAD_AUDIO, PlayerDeadAudio);
 			map.Add(GameConst.PLAYER_CHEM_AUDIO, chemAudio);
 			map.Add(GameConst.BUTTON_CLICK_AUDIO, buttonClickAudio);
+			map.Add(GameConst.COLLECT_AUDIO, collectAudio);
+			map.Add(GameConst.BUY_AUDIO, buyCompletedAudio);
+			map.Add(GameConst.CHUONG_AUDIO, chuongAudio);
+			map.Add(GameConst.DRAGON_AUDIO, dragonAudio);
 
 			instance = this;
 		}
@@ -82,4 +93,27 @@ public class SoundManager : MonoBehaviour {
 //		Handheld.Vibrate();
 		Vibration.Vibrate(50);
 	}
+
+	public void PlayMusic(string musicName) {
+		if (DataPref.getNumData(GameConst.MUSIC_KEY) == 1) return;
+
+		homeMusicSource.Stop();
+		playMusicSource.Stop();
+		storyMusicSource.Stop();
+
+		if (musicName == GameConst.HOME_MUSIC) {
+			homeMusicSource.Play();
+		} else if (musicName == GameConst.STORY_MUSIC) {
+			storyMusicSource.Play();
+		} else if (musicName == GameConst.PLAY_MUSIC) {
+			playMusicSource.Play();
+		}
+	}
+
+	public void StopMusic() {
+		homeMusicSource.Stop();
+		playMusicSource.Stop();
+		storyMusicSource.Stop();
+	}
+
 }

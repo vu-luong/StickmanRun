@@ -15,6 +15,7 @@ public class GameBalance : MonoBehaviour {
 	public float distance;
 	private bool notGenBoss = true;
 	private float timeSpawnFlyEnemy, timeSpawnWalkEnemy;
+	private float timeSpawnFlyEnemyPeriod, timeSpawnWalkEnemyPeriod;
 	private float timeSpawnFire, periodTimeSpawnFire;
 	private int numSpawnFire;
 
@@ -44,6 +45,8 @@ public class GameBalance : MonoBehaviour {
 		offsetSpecialSpawn = new Vector3(15, 1, 0);
 		offsetKunaiSpawn = new Vector3(15, 1, 0);
 		offsetUpSpawn = new Vector3(15, 1, 0);
+		timeSpawnFlyEnemyPeriod = 5;
+		timeSpawnWalkEnemyPeriod = 5.5f;
 
 		timeCountEnemiesDie = 0;
 		numSpawnFire = 0;
@@ -54,12 +57,18 @@ public class GameBalance : MonoBehaviour {
 		timeSpawnFlyEnemy = timeSpawnFlyEnemy + Time.deltaTime;
 		timeSpawnWalkEnemy = timeSpawnWalkEnemy + Time.deltaTime;
 
-		if (timeSpawnFlyEnemy > 5) {
+		if (timeSpawnFlyEnemy > timeSpawnFlyEnemyPeriod) {
+			timeSpawnFlyEnemyPeriod -= 0.05f;
+			if (timeSpawnFlyEnemyPeriod <= 1) timeSpawnFlyEnemyPeriod = 1;
+//			Debug.Log(timeSpawnFlyEnemyPeriod);
 			Instantiate(flyEnemySpawn, transform.position + offsetFlyEnemySpawn, Quaternion.identity);
 			timeSpawnFlyEnemy = 0;
 		}
 
-		if (timeSpawnWalkEnemy > 5.5f) {
+		if (timeSpawnWalkEnemy > timeSpawnWalkEnemyPeriod) {
+			timeSpawnWalkEnemyPeriod -= 0.07f;
+			if (timeSpawnWalkEnemyPeriod <= 1) timeSpawnWalkEnemyPeriod = 1;
+
 			Instantiate(walkEnemySpawn, transform.position + offsetWalkEnemySpawn, Quaternion.identity);
 			timeSpawnWalkEnemy = 0;
 		}
@@ -82,7 +91,7 @@ public class GameBalance : MonoBehaviour {
 					SpawnUp();
 					numSpawnFire = 0;
 				} else {
-				SpawnFire();
+//				SpawnFire();
 			}
 
 		}

@@ -33,12 +33,23 @@ public abstract class Collectible : MonoBehaviour {
 	}
 
 	public void BeCollected() {
+		SoundManager.instance.PlaySingleByName(GameConst.COLLECT_AUDIO);
 		bar.IncreaseProcess(3);
+
+		if (Mathf.Abs(bar.GetProgress() - 1) < float.Epsilon) {
+			bar.SetProgress(0);
+
+			AddItem();
+
+		}
+
 		DataPref.addNumData(GameConst.NUM_COLLECT_KEY, 1);
 
 		Instantiate(particle, transform.position, Quaternion.Euler(270, 0, 0));
 
 		Destroy(gameObject);
 	}
+
+	protected abstract void AddItem();
 
 }
