@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using admob;
+//using admob;
 
 public class StoryStateManager : MonoBehaviour {
 
 	void Start() {
 		SoundManager.instance.PlayMusic(GameConst.STORY_MUSIC);
 		if (!GameConst.IS_TEST) {
-			Admob.Instance().removeBanner();
+//			Admob.Instance().removeBanner();
+			SoundManager.instance.HideBanner();
 		}
 	}
 

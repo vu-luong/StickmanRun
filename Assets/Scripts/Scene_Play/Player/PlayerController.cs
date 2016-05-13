@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using admob;
+//using admob;
 
 public class PlayerController : MonoBehaviour {
 
@@ -257,7 +257,8 @@ public class PlayerController : MonoBehaviour {
 
 	void GameOver () {
 		if (!GameConst.IS_TEST) {
-			Admob.Instance().showBannerRelative(AdSize.Banner, AdPosition.BOTTOM_CENTER, 0);
+//			Admob.Instance().showBannerRelative(AdSize.Banner, AdPosition.BOTTOM_CENTER, 0);
+			SoundManager.instance.ShowBanner();
 		}
 
 		camUp.ScrollSpeed = 0;

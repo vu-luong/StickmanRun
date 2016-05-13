@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using GooglePlayGames;
+using UnityEngine.SocialPlatforms;
+using GoogleMobileAds.Api;
 
 public class SoundManager : MonoBehaviour {
 
@@ -23,6 +26,12 @@ public class SoundManager : MonoBehaviour {
 	public AudioClip chuongAudio;
 	public AudioClip dragonAudio;
 
+	private BannerView bannerView;
+	private InterstitialAd interstitial;
+	private AdRequest request;
+	string adUnitId = "ca-app-pub-7554197261759205/9339882577";
+	string adUnitIdFull = "ca-app-pub-7554197261759205/1816615773";
+
 	Dictionary <string, AudioClip> map;
 
 	void Awake (){
@@ -38,6 +47,35 @@ public class SoundManager : MonoBehaviour {
 			map.Add(GameConst.BUY_AUDIO, buyCompletedAudio);
 			map.Add(GameConst.CHUONG_AUDIO, chuongAudio);
 			map.Add(GameConst.DRAGON_AUDIO, dragonAudio);
+
+			if (!GameConst.IS_TEST) {
+				
+				bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
+				request = new AdRequest.Builder()
+					.AddTestDevice("4FDE60316E3C4F65861816F42229CBE9")  // My test device.
+					.Build();;
+				bannerView.LoadAd(request);
+
+
+				// Initialize an InterstitialAd.
+				interstitial = new InterstitialAd(adUnitIdFull);
+				// Create an empty ad request.
+				// Load the interstitial with the request.
+				interstitial.LoadAd(request);
+
+				interstitial.OnAdClosed += HandleOnAdClosed;
+
+				//			Admob.Instance().initAdmob("ca-app-pub-7554197261759205/9339882577", "ca-app-pub-7554197261759205/1816615773");
+				Debug.Log("init admob");
+				//			Admob.Instance().setTesting(true);
+				//			Admob.Instance().setForChildren(true);
+				//			Admob.Instance().loadInterstitial(); 
+
+				PlayGamesPlatform.Activate ();
+
+				Authen();
+			}
+
 
 			instance = this;
 		}
@@ -116,4 +154,53 @@ public class SoundManager : MonoBehaviour {
 		storyMusicSource.Stop();
 	}
 
+
+	public void ShowLeaderBoard() {
+		((PlayGamesPlatform)Social.Active).ShowLeaderboardUI (GPGSIds.leaderboard_stickman_quest_leaderboard);
+	}
+
+	public void Authen() {
+		if (!GameConst.IS_TEST) {
+			// authenticate user:
+			Social.localUser.Authenticate((bool success) => {
+				// handle success or failure
+				Debug.Log("status authen: " + success);
+//				if (success)
+//					((PlayGamesPlatform)Social.Active).ShowLeaderboardUI (GPGSIds.leaderboard_stickman_quest_leaderboard);
+			});
+		}
+	}
+
+	public void ShowBanner() {
+		bannerView.Show();
+	}
+
+	public void ShowBanner2() {
+		bannerView = new BannerView(adUnitId, new AdSize(415, 55), AdPosition.BottomLeft);
+		bannerView.LoadAd(request);
+		bannerView.Show();
+	}
+
+	public void HideBanner() {
+		if (!GameConst.IS_TEST) {
+			bannerView.Hide();
+			bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
+			bannerView.LoadAd(request);
+			bannerView.Hide();	
+		}
+	}
+
+
+	public void ShowFullAd() {
+		if (interstitial.IsLoaded()) {
+			interstitial.Show();
+		}
+	}
+
+	public void HandleOnAdClosed(object sender, System.EventArgs args)
+	{
+		print("OnAdLoaded event received.");
+		// Handle the ad loaded event.
+		interstitial.LoadAd(request);
+	}
 }

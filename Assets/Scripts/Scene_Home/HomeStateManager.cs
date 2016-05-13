@@ -2,9 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using System;
-using admob;
-//using GooglePlayGames;
-using UnityEngine.SocialPlatforms;
+//using admob;
 
 public class HomeStateManager : MonoBehaviour {
 	public GameObject shopCanvas;
@@ -14,30 +12,20 @@ public class HomeStateManager : MonoBehaviour {
 	public GameObject completeCanvas;
 	public GameObject buyCanvas;
 
+	private static int gameCount;
+
 	void Awake() {
-		if (!GameConst.IS_TEST) {
-			Admob.Instance().initAdmob("ca-app-pub-7554197261759205/9339882577", "ca-app-pub-7554197261759205/1816615773");
-			Debug.Log("init admob");
-//			Admob.Instance().setTesting(true);
-//			Admob.Instance().setForChildren(true);
-			Admob.Instance().loadInterstitial(); 
-
-			// authenticate user:
-			Social.localUser.Authenticate((bool success) => {
-				// handle success or failure
-				Debug.Log("status authen: " + success);
-			});
-
-		}
 	}
 
 	void Start() {
 		SoundManager.instance.PlayMusic(GameConst.HOME_MUSIC);
 		if (!GameConst.IS_TEST) {
-			Admob.Instance().interstitialEventHandler += onInterstitialEvent;
-			Admob.Instance().bannerEventHandler += onBannerEvent;
-			Admob.Instance().showBannerRelative(new AdSize(310, 45), AdPosition.BOTTOM_CENTER, 0);
+			SoundManager.instance.ShowBanner();
+//			Admob.Instance().interstitialEventHandler += onInterstitialEvent;
+//			Admob.Instance().bannerEventHandler += onBannerEvent;
+//			Admob.Instance().showBannerRelative(new AdSize(310, 45), AdPosition.BOTTOM_CENTER, 0);
 		}
+
 	}
 
 	public void ShowSetting() {
@@ -131,8 +119,9 @@ public class HomeStateManager : MonoBehaviour {
 	}
 
 	public static string GetSceneName() {
-		int a = UnityEngine.Random.Range(0, 5);
-
+		int a = gameCount;
+		gameCount += 1;
+		if (gameCount == 4) gameCount = 0;
 		return "Play" + a;
 	}
 
@@ -144,7 +133,7 @@ public class HomeStateManager : MonoBehaviour {
 		string facebookshare = "https://www.facebook.com/sharer/sharer.php?u=" + Uri.EscapeUriString(appStoreLink);
 		SoundManager.instance.Vibrate();
 		Application.OpenURL(facebookshare);
-//		ShareToFacebook(appStoreLink, "tower defense", "blabla", "blabla", null, null);
+
 	}
 
 
@@ -163,10 +152,10 @@ public class HomeStateManager : MonoBehaviour {
 	void onInterstitialEvent(string eventName, string msg)
 	{
 		Debug.Log("handler onAdmobEvent---" + eventName + "   " + msg);
-		if (eventName == AdmobEvent.onAdClosed)
-		{
-			Admob.Instance().loadInterstitial();
-		}
+//		if (eventName == AdmobEvent.onAdClosed)
+//		{
+//			Admob.Instance().loadInterstitial();
+//		}
 	}
 
 	void onBannerEvent(string eventName, string msg) {
@@ -177,10 +166,15 @@ public class HomeStateManager : MonoBehaviour {
 //		}
 	}
 
-
 	public void OnShowLeaderBoardClick() {
 		if (!GameConst.IS_TEST) {
-			Social.ShowLeaderboardUI();
+			int bestDistance = DataPref.getNumData(GameConst.BEST_DISTANCE_KEY);
+			Social.ReportScore(bestDistance, "CgkI3tfW-NMLEAIQBQ", (bool success) => {
+				// handle success or failure
+				Debug.Log("status post score: " + success);
+				SoundManager.instance.ShowLeaderBoard();
+			});
 		}
+
 	}
 }

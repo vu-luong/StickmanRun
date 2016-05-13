@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using admob;
+//using admob;
 
 public class HelpStateManager : MonoBehaviour {
 
@@ -12,7 +12,8 @@ public class HelpStateManager : MonoBehaviour {
 	void Start() {
 		isBtnStartClicked = false;
 		if (!GameConst.IS_TEST) {
-			Admob.Instance().showBannerRelative(new AdSize(415, 55), AdPosition.BOTTOM_LEFT, 40);
+//			Admob.Instance().showBannerRelative(new AdSize(415, 55), AdPosition.BOTTOM_LEFT, 40);
+			SoundManager.instance.ShowBanner2();
 		}
 	}
 
@@ -36,7 +37,7 @@ public class HelpStateManager : MonoBehaviour {
 
 		// Start an asynchronous operation to load the scene that was passed to the LoadNewScene coroutine.
 
-		string name = "Play0";//HomeStateManager.GetSceneName();
+		string name = HomeStateManager.GetSceneName();
 
 		AsyncOperation async = SceneManager.LoadSceneAsync(name, LoadSceneMode.Single);
 

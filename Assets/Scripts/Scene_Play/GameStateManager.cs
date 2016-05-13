@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using admob;
+//using admob;
 
 public class GameStateManager : MonoBehaviour {
 
@@ -12,12 +12,14 @@ public class GameStateManager : MonoBehaviour {
 	public GameObject buyCanvas;
 
 	void Start() {
+		SoundManager.instance.HideBanner();
 		SoundManager.instance.PlayMusic(GameConst.PLAY_MUSIC);
 	}
 
 	public void OnPause() {
 		if (!GameConst.IS_TEST) {
-			Admob.Instance().showBannerRelative(AdSize.Banner, AdPosition.BOTTOM_CENTER, 0);
+//			Admob.Instance().showBannerRelative(AdSize.Banner, AdPosition.BOTTOM_CENTER, 0);
+			SoundManager.instance.ShowBanner();
 		}
 
 		Time.timeScale = 0;
@@ -27,7 +29,8 @@ public class GameStateManager : MonoBehaviour {
 
 	public void OnUnpause() {
 		if (!GameConst.IS_TEST) { 
-			Admob.Instance().removeBanner();
+//			Admob.Instance().removeBanner();
+			SoundManager.instance.HideBanner();
 		}
 
 		Time.timeScale = 1;

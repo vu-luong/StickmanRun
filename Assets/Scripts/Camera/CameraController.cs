@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using admob;
+//using admob;
 
 public class CameraController : MonoBehaviour {
 
@@ -20,9 +20,6 @@ public class CameraController : MonoBehaviour {
 
 	void Awake() {
 		SetPosForScene();
-		if (!GameConst.IS_TEST) { 
-			Admob.Instance().removeBanner(); 
-		}
 	}
 
 	void Start() {

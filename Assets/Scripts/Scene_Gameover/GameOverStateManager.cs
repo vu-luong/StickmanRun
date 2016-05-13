@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using admob;
+//using admob;
 
 public class GameOverStateManager : MonoBehaviour {
 
 	public void gotoHomeScene() {
 		if (!GameConst.IS_TEST) {
 
-			if (Admob.Instance().isInterstitialReady()) 
-				Admob.Instance().showInterstitial();
+//			if (Admob.Instance().isInterstitialReady()) 
+//				Admob.Instance().showInterstitial();
 
+			SoundManager.instance.ShowFullAd();
 		}
 		SceneManager.LoadScene("Home", LoadSceneMode.Single);
 		SoundManager.instance.Vibrate();
@@ -18,8 +19,9 @@ public class GameOverStateManager : MonoBehaviour {
 
 	public void gotoPlayScene() {
 		if (!GameConst.IS_TEST) {
-			if (Admob.Instance().isInterstitialReady()) 
-				Admob.Instance().showInterstitial();
+//			if (Admob.Instance().isInterstitialReady()) 
+//				Admob.Instance().showInterstitial();
+			SoundManager.instance.ShowFullAd();
 		}
 //		string name = HomeStateManager.GetSceneName();
 		SceneManager.LoadScene("Help", LoadSceneMode.Single);
