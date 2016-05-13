@@ -46,7 +46,7 @@ public class GameBalance : MonoBehaviour {
 		offsetSpecialSpawn = new Vector3(15, 1, 0);
 		offsetKunaiSpawn = new Vector3(15, 1, 0);
 		offsetUpSpawn = new Vector3(15, 1, 0);
-		timeSpawnFlyEnemyPeriod = 5;
+		timeSpawnFlyEnemyPeriod = 5f;
 		timeSpawnWalkEnemyPeriod = 5.5f;
 
 		timeCountEnemiesDie = 0;
@@ -61,7 +61,6 @@ public class GameBalance : MonoBehaviour {
 		if (timeSpawnFlyEnemy > timeSpawnFlyEnemyPeriod) {
 			timeSpawnFlyEnemyPeriod -= 0.05f;
 			if (timeSpawnFlyEnemyPeriod <= 1) timeSpawnFlyEnemyPeriod = 1;
-//			Debug.Log(timeSpawnFlyEnemyPeriod);
 			Instantiate(flyEnemySpawn, transform.position + offsetFlyEnemySpawn, Quaternion.identity);
 			timeSpawnFlyEnemy = 0;
 		}

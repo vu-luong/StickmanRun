@@ -5,7 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class GameOverStateManager : MonoBehaviour {
 
+	void Start(){
+		SoundManager.instance.PlaySingleByNameLoop(GameConst.COUNT_AUDIO);
+	}
+
+	void StopSound() {
+	}
+
 	public void gotoHomeScene() {
+		SoundManager.instance.PlaySingleByName(GameConst.BUTTON_CLICK_AUDIO);
 		if (!GameConst.IS_TEST) {
 
 //			if (Admob.Instance().isInterstitialReady()) 
@@ -18,6 +26,7 @@ public class GameOverStateManager : MonoBehaviour {
 	}
 
 	public void gotoPlayScene() {
+		SoundManager.instance.PlaySingleByName(GameConst.BUTTON_CLICK_AUDIO);
 		if (!GameConst.IS_TEST) {
 //			if (Admob.Instance().isInterstitialReady()) 
 //				Admob.Instance().showInterstitial();

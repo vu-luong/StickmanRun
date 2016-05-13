@@ -25,8 +25,9 @@ public class SoundManager : MonoBehaviour {
 	public AudioClip buyCompletedAudio;
 	public AudioClip chuongAudio;
 	public AudioClip dragonAudio;
+	public AudioClip countAudio;
 
-	private BannerView bannerView;
+	private BannerView bannerView, bannerView2;
 	private InterstitialAd interstitial;
 	private AdRequest request;
 	string adUnitId = "ca-app-pub-7554197261759205/9339882577";
@@ -47,10 +48,13 @@ public class SoundManager : MonoBehaviour {
 			map.Add(GameConst.BUY_AUDIO, buyCompletedAudio);
 			map.Add(GameConst.CHUONG_AUDIO, chuongAudio);
 			map.Add(GameConst.DRAGON_AUDIO, dragonAudio);
+			map.Add(GameConst.COUNT_AUDIO, countAudio);
 
 			if (!GameConst.IS_TEST) {
 				
 				bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
+				bannerView2 = new BannerView(adUnitId, new AdSize(415, 55), AdPosition.BottomLeft);
+
 				request = new AdRequest.Builder()
 					.AddTestDevice("4FDE60316E3C4F65861816F42229CBE9")  // My test device.
 					.Build();;
@@ -90,10 +94,25 @@ public class SoundManager : MonoBehaviour {
 	{
 		if (DataPref.getNumData(GameConst.SOUND_KEY) == 1) return;
 		//Set the clip of our efxSource audio source to the clip passed in as a parameter.
+		efxSource.loop = false;
 		efxSource.clip = map[name];
-
 		//Play the clip.
 		efxSource.Play ();
+	}
+
+	//Used to play single sound clips.
+	public void PlaySingleByNameLoop(string name)
+	{
+		if (DataPref.getNumData(GameConst.SOUND_KEY) == 1) return;
+		//Set the clip of our efxSource audio source to the clip passed in as a parameter.
+		efxSource.clip = map[name];
+		efxSource.loop = true;
+		//Play the clip.
+		efxSource.Play ();
+	}
+
+	public void StopSingleLoop() {
+		if (efxSource.isPlaying) efxSource.Stop();
 	}
 
 	//Used to play single sound clips.
@@ -176,17 +195,18 @@ public class SoundManager : MonoBehaviour {
 	}
 
 	public void ShowBanner2() {
-		bannerView = new BannerView(adUnitId, new AdSize(415, 55), AdPosition.BottomLeft);
-		bannerView.LoadAd(request);
-		bannerView.Show();
+		bannerView.Hide();
+		bannerView2.LoadAd(request);
+		bannerView2.Show();
 	}
 
 	public void HideBanner() {
 		if (!GameConst.IS_TEST) {
 			bannerView.Hide();
-			bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
+			bannerView2.Hide();
+//			bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
 			bannerView.LoadAd(request);
-			bannerView.Hide();	
+//			bannerView.Hide();	
 		}
 	}
 

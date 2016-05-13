@@ -64,4 +64,31 @@ public class GameStateManager : MonoBehaviour {
 		SceneManager.LoadScene("Victory", LoadSceneMode.Single);
 	}
 
+	public void GoToHome() {
+		Time.timeScale = 1;
+		SoundManager.instance.PlaySingleByName(GameConst.BUTTON_CLICK_AUDIO);
+		if (!GameConst.IS_TEST) {
+
+			//			if (Admob.Instance().isInterstitialReady()) 
+			//				Admob.Instance().showInterstitial();
+
+			SoundManager.instance.ShowFullAd();
+		}
+		SceneManager.LoadScene("Home", LoadSceneMode.Single);
+		SoundManager.instance.Vibrate();
+	}
+
+	public void GoToHelp() {
+		Time.timeScale = 1;
+		SoundManager.instance.PlaySingleByName(GameConst.BUTTON_CLICK_AUDIO);
+		if (!GameConst.IS_TEST) {
+			//			if (Admob.Instance().isInterstitialReady()) 
+			//				Admob.Instance().showInterstitial();
+			SoundManager.instance.ShowFullAd();
+		}
+		//		string name = HomeStateManager.GetSceneName();
+		SceneManager.LoadScene("Help", LoadSceneMode.Single);
+		SoundManager.instance.Vibrate();
+	}
+
 }

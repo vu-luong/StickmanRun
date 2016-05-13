@@ -40,6 +40,7 @@ public class BestDistance : MonoBehaviour {
 		count += unit;
 		if (count >= maxCount) {
 			count = maxCount;
+			SoundManager.instance.StopSingleLoop();
 		}
 
 		tex.text = count + " M";

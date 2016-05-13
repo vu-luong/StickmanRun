@@ -121,7 +121,7 @@ public class HomeStateManager : MonoBehaviour {
 	public static string GetSceneName() {
 		int a = gameCount;
 		gameCount += 1;
-		if (gameCount == 4) gameCount = 0;
+		if (gameCount == 5) gameCount = 0;
 		return "Play" + a;
 	}
 

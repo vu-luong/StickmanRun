@@ -66,6 +66,7 @@ public class GameConst {
 	public static string BUY_AUDIO = "buy audio";
 	public static string CHUONG_AUDIO = "chuong audio";
 	public static string DRAGON_AUDIO = "dragon audio";
+	public static string COUNT_AUDIO = "count audio";
 
 	public static string HOME_MUSIC = "home music";
 	public static string STORY_MUSIC = "story music";

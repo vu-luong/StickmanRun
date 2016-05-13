@@ -70,6 +70,9 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		//TODO
+//		DataPref.setNumData(GameConst.NUM_COLLECT_KEY, 50000);
+
 		timeButtonHolding = 0;
 		timeGoToGOV = 0;
 		ButtonHolding = false;
