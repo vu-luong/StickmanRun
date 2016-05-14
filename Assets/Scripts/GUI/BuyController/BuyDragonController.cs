@@ -28,6 +28,7 @@ public class BuyDragonController : BuyController {
 	
 	#region implemented abstract members of BuyController
 	protected override void BuyCompleted () {
+		SoundManager.instance.AnalyticReport("Shop", "buy s-arrow");
 		ItemData.AddDragon(1);
 		DataPref.addNumData(GameConst.NUM_COLLECT_KEY, -GameConst.DRAGON_COST);
 	}

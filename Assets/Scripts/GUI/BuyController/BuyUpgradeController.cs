@@ -27,6 +27,7 @@ public class BuyUpgradeController : BuyController {
 	#region implemented abstract members of BuyController
 
 	protected override void BuyCompleted () {
+		SoundManager.instance.AnalyticReport("Shop", "buy Upgrade");
 		ItemData.IsUpgradedSlash = true;
 		DataPref.addNumData(GameConst.NUM_COLLECT_KEY, -GameConst.UPGRADE_COST);
 	}

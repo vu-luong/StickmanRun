@@ -10,6 +10,7 @@ public class Boss1Controller : Enemy {
 	private int fullHP;
 	private BossFormation bossFormation;
 	private BossHPProgress bossHPProgress;
+	public Animator animator2;
 
 	protected override void InitHP () {
 		this.HP = bossFormation.BossHPBalance;
@@ -57,9 +58,11 @@ public class Boss1Controller : Enemy {
 
 	public void UseChuong() {
 		animator.SetTrigger("Chuong");
+		if (animator2 != null) animator2.SetTrigger("phun");
+
 		Vector3 offset = new Vector3(2, 2.2f, 0);
 		Instantiate(chuongs[Random.Range(0, chuongs.Length)], transform.position + offset, Quaternion.identity);
-		Invoke("UseChuong", 2.5f);
+		Invoke("UseChuong", 2.3f);
 	}
 
 	protected override void OnTriggerEnter2D(Collider2D col) {

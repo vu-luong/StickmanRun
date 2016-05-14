@@ -15,10 +15,13 @@ public class HelpStateManager : MonoBehaviour {
 //			Admob.Instance().showBannerRelative(new AdSize(415, 55), AdPosition.BOTTOM_LEFT, 40);
 			SoundManager.instance.ShowBanner2();
 		}
+		SoundManager.instance.AnalyticReport("Help Scene", "Here");
 	}
 
 	public void MoveToStartScene() {
 		if (isBtnStartClicked) return;
+
+		SoundManager.instance.AnalyticReport("Help Scene", "Start button click");
 //		Debug.Log("click start button");
 		isBtnStartClicked = true;
 

@@ -12,8 +12,11 @@ public class GameStateManager : MonoBehaviour {
 	public GameObject buyCanvas;
 
 	void Start() {
+		Time.timeScale = 1.05f;
 		SoundManager.instance.HideBanner();
 		SoundManager.instance.PlayMusic(GameConst.PLAY_MUSIC);
+
+		SoundManager.instance.AnalyticReport("Play Scene", "Start button click");
 	}
 
 	public void OnPause() {
@@ -39,14 +42,15 @@ public class GameStateManager : MonoBehaviour {
 	}
 
 	public void ShowShop() {
+		SoundManager.instance.AnalyticReport("Play Scene", "Show Shop button click");
 		SoundManager.instance.PlaySingleByName(GameConst.BUTTON_CLICK_AUDIO);
 		shopCanvas.SetActive(true);
 		OnPause();
 	}
 
 	public void CloseShop() {
+		SoundManager.instance.AnalyticReport("Play Scene", "Close Shop button click");
 		SoundManager.instance.PlaySingleByName(GameConst.BUTTON_CLICK_AUDIO);
-
 		shopCanvas.SetActive(false);
 		completeCanvas.SetActive(false);
 		buyCanvas.SetActive(true);
@@ -55,16 +59,20 @@ public class GameStateManager : MonoBehaviour {
 	}
 
 	public void GoToGameOver() {
+		SoundManager.instance.AnalyticReport("Play Scene", "Game Over");
 		ItemData.ResetCount();
 		SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
 	}
 
 	public void GoToVictory() {
+		SoundManager.instance.AnalyticReport("Play Scene", "Game Victory");
 		ItemData.ResetCount();
 		SceneManager.LoadScene("Victory", LoadSceneMode.Single);
 	}
 
 	public void GoToHome() {
+		SoundManager.instance.AnalyticReport("Play Scene", "Home Button Click");
+
 		Time.timeScale = 1;
 		SoundManager.instance.PlaySingleByName(GameConst.BUTTON_CLICK_AUDIO);
 		if (!GameConst.IS_TEST) {
@@ -79,6 +87,8 @@ public class GameStateManager : MonoBehaviour {
 	}
 
 	public void GoToHelp() {
+		SoundManager.instance.AnalyticReport("Play Scene", "Replay Button Click");
+
 		Time.timeScale = 1;
 		SoundManager.instance.PlaySingleByName(GameConst.BUTTON_CLICK_AUDIO);
 		if (!GameConst.IS_TEST) {

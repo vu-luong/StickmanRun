@@ -25,6 +25,7 @@ public class BuyChuongController : BuyController {
 	#region implemented abstract members of BuyController
 
 	protected override void BuyCompleted () {
+		SoundManager.instance.AnalyticReport("Shop", "buy fire storm");
 		ItemData.AddChuong(1);
 		DataPref.addNumData(GameConst.NUM_COLLECT_KEY, -GameConst.CHUONG_COST);
 	}

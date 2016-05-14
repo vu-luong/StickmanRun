@@ -34,6 +34,7 @@ public class BuyHPController : BuyController {
 	#region implemented abstract members of BuyController
 
 	protected override void BuyCompleted () {
+		SoundManager.instance.AnalyticReport("Shop", "buy HP");
 		HPController hpObject = FindObjectOfType<HPController>();
 		hpObject.IncreaseProcess(40);
 		DataPref.addNumData(GameConst.NUM_COLLECT_KEY, -GameConst.HP_COST);

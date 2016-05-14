@@ -5,14 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class GameOverStateManager : MonoBehaviour {
 
-	void Start(){
-		SoundManager.instance.PlaySingleByNameLoop(GameConst.COUNT_AUDIO);
-	}
+	private string sceneName = "Gameover Scene";
 
-	void StopSound() {
+	void Start(){
+		Time.timeScale = 1;
+		SoundManager.instance.PlaySingleByNameLoop(GameConst.COUNT_AUDIO);
+		SoundManager.instance.PlaySingleByName(GameConst.JUMP_DOWN_AUDIO);
+		SoundManager.instance.AnalyticReport(sceneName, "Here");
 	}
 
 	public void gotoHomeScene() {
+		SoundManager.instance.AnalyticReport(sceneName, "Home button click");
+
 		SoundManager.instance.PlaySingleByName(GameConst.BUTTON_CLICK_AUDIO);
 		if (!GameConst.IS_TEST) {
 
@@ -26,6 +30,7 @@ public class GameOverStateManager : MonoBehaviour {
 	}
 
 	public void gotoPlayScene() {
+		SoundManager.instance.AnalyticReport(sceneName, "Replay button click");
 		SoundManager.instance.PlaySingleByName(GameConst.BUTTON_CLICK_AUDIO);
 		if (!GameConst.IS_TEST) {
 //			if (Admob.Instance().isInterstitialReady()) 

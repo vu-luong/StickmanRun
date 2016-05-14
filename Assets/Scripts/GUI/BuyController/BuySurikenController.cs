@@ -23,6 +23,7 @@ public class BuySurikenController : BuyController {
 	}
 
 	protected override void BuyCompleted () {
+		SoundManager.instance.AnalyticReport("Shop", "buy shuriken");
 		ItemData.AddSuriken(30);
 		DataPref.addNumData(GameConst.NUM_COLLECT_KEY, -GameConst.SURIKEN_COST);
 	}

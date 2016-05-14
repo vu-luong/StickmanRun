@@ -12,6 +12,8 @@ public class SoundManager : MonoBehaviour {
 	public AudioSource storyMusicSource;
 	public AudioSource playMusicSource;
 
+	public GoogleAnalyticsV4 googleAnalytics; 
+
 	public static SoundManager instance = null;     //Allows other scripts to call functions from SoundManager.             
 	public float lowPitchRange = .95f;              //The lowest a sound effect will be randomly pitched.
 	public float highPitchRange = 1.05f;            //The highest a sound effect will be randomly pitched.
@@ -26,6 +28,9 @@ public class SoundManager : MonoBehaviour {
 	public AudioClip chuongAudio;
 	public AudioClip dragonAudio;
 	public AudioClip countAudio;
+	public AudioClip pickupAudio;
+	public AudioClip waitAudio;
+	public AudioClip jumpDownAudio;
 
 	private BannerView bannerView, bannerView2;
 	private InterstitialAd interstitial;
@@ -49,6 +54,9 @@ public class SoundManager : MonoBehaviour {
 			map.Add(GameConst.CHUONG_AUDIO, chuongAudio);
 			map.Add(GameConst.DRAGON_AUDIO, dragonAudio);
 			map.Add(GameConst.COUNT_AUDIO, countAudio);
+			map.Add(GameConst.PICKUP_AUDIO, pickupAudio);
+			map.Add(GameConst.WAIT_AUDIO, waitAudio);
+			map.Add(GameConst.JUMP_DOWN_AUDIO, jumpDownAudio);
 
 			if (!GameConst.IS_TEST) {
 				
@@ -112,7 +120,7 @@ public class SoundManager : MonoBehaviour {
 	}
 
 	public void StopSingleLoop() {
-		if (efxSource.isPlaying) efxSource.Stop();
+		if (efxSource != null && efxSource.isPlaying) efxSource.Stop();
 	}
 
 	//Used to play single sound clips.
@@ -153,6 +161,8 @@ public class SoundManager : MonoBehaviour {
 
 	public void PlayMusic(string musicName) {
 		if (DataPref.getNumData(GameConst.MUSIC_KEY) == 1) return;
+
+//		Debug.Log("Den day roi");
 
 		homeMusicSource.Stop();
 		playMusicSource.Stop();
@@ -223,4 +233,10 @@ public class SoundManager : MonoBehaviour {
 		// Handle the ad loaded event.
 		interstitial.LoadAd(request);
 	}
+
+	public void AnalyticReport(string scene, string content) {
+		if (!GameConst.IS_TEST)
+			googleAnalytics.LogEvent(scene, content, "", 0);
+	}
+
 }

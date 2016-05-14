@@ -13,12 +13,15 @@ public class AchievementController : MonoBehaviour {
 	private const int DISTANCE_FOR_ACHIEVEMENT2 = 4000;
 	private const int DISTANCE_FOR_ACHIEVEMENT3 = 8000;
 	private const int DISTANCE_FOR_ACHIEVEMENT4 = 20000;
+	private const int DISTANCE_FOR_ACHIEVEMENT5 = 50000;
 
 	private int bestDistance;
 	private int isWinGame;
 
 	// Use this for initialization
 	void Start () {
+//		DataPref.setNumData(GameConst.BEST_DISTANCE_KEY, 0);
+
 		bestDistance = DataPref.getNumData(GameConst.BEST_DISTANCE_KEY);
 		isWinGame = DataPref.getNumData(GameConst.IS_WIN_KEY);
 
@@ -50,7 +53,7 @@ public class AchievementController : MonoBehaviour {
 		else achievement4.SetActive(false);
 	}
 	void SetAchievement5 () {
-		if (isWinGame != 0) 
+		if (bestDistance >= DISTANCE_FOR_ACHIEVEMENT5) 
 			achievement5.SetActive(true);
 		else achievement5.SetActive(false);
 	}

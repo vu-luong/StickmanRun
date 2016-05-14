@@ -7,6 +7,7 @@ public class KunaiItem : MonoBehaviour {
 		string tag = other.gameObject.tag;
 		if (tag == "Player" || tag == "PlayerSpecial") {
 			ItemData.AddSuriken(30);
+			SoundManager.instance.PlaySingleByName(GameConst.PICKUP_AUDIO);
 			Destroy(gameObject);
 		}
 	}

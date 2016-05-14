@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class StoryStateManager : MonoBehaviour {
 
 	void Start() {
+		SoundManager.instance.AnalyticReport("Story Scene", "Here");
+
 		SoundManager.instance.PlayMusic(GameConst.STORY_MUSIC);
 		if (!GameConst.IS_TEST) {
 //			Admob.Instance().removeBanner();
@@ -14,6 +16,7 @@ public class StoryStateManager : MonoBehaviour {
 	}
 
 	public void GoToHelpScene() {
+		SoundManager.instance.AnalyticReport("Story Scene", "Play Button Click");
 		SoundManager.instance.PlaySingleByName(GameConst.BUTTON_CLICK_AUDIO);
 		SoundManager.instance.Vibrate();
 

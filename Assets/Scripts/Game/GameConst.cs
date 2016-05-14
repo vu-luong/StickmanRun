@@ -43,8 +43,8 @@ public class GameConst {
 
 	public static int PLAYER_SPECIAL_POWER = 100;
 
-	public static float TIME_HOLD_BIG_KUNAI = 0.5f;
-	public static float TIME_HOLD_BIG_SLASH = 1.2f;
+	public static float TIME_HOLD_BIG_KUNAI = 0.6f;
+	public static float TIME_HOLD_BIG_SLASH = 1.5f;
 
 	public static float CHUONG_OFFSET_X = -0.2f;
 	public static float CHUONG_OFFSET_Y = 1.3f;
@@ -67,10 +67,13 @@ public class GameConst {
 	public static string CHUONG_AUDIO = "chuong audio";
 	public static string DRAGON_AUDIO = "dragon audio";
 	public static string COUNT_AUDIO = "count audio";
+	public static string PICKUP_AUDIO = "pick up";
+	public static string WAIT_AUDIO = "wait audio";
 
 	public static string HOME_MUSIC = "home music";
 	public static string STORY_MUSIC = "story music";
 	public static string PLAY_MUSIC = "play music";
+	public static string JUMP_DOWN_AUDIO = "jump down audio";
 
 	public static string SPAWN_BALANCE_TAG = "SpawnBalanceDetect";
 }

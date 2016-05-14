@@ -34,6 +34,11 @@ public class GameBalance : MonoBehaviour {
 	private int minPeriodTimeSpawnFire = 8;
 	private int maxPeriodTimeSpawnFire = 13;
 
+	private float minTimeSpawnFly = 0.3f;
+	private float startTimeSpawnFly = 4.5f;
+
+	private float startTimeSpawnWalk = 5f;
+	private float minTimeSpawnWalk = 0.6f;
 
 	// Use this for initialization
 	void Start () {
@@ -46,8 +51,8 @@ public class GameBalance : MonoBehaviour {
 		offsetSpecialSpawn = new Vector3(15, 1, 0);
 		offsetKunaiSpawn = new Vector3(15, 1, 0);
 		offsetUpSpawn = new Vector3(15, 1, 0);
-		timeSpawnFlyEnemyPeriod = 5f;
-		timeSpawnWalkEnemyPeriod = 5.5f;
+		timeSpawnFlyEnemyPeriod = startTimeSpawnFly;
+		timeSpawnWalkEnemyPeriod = startTimeSpawnWalk;
 
 		timeCountEnemiesDie = 0;
 		numSpawnFire = 0;
@@ -60,14 +65,14 @@ public class GameBalance : MonoBehaviour {
 
 		if (timeSpawnFlyEnemy > timeSpawnFlyEnemyPeriod) {
 			timeSpawnFlyEnemyPeriod -= 0.05f;
-			if (timeSpawnFlyEnemyPeriod <= 1) timeSpawnFlyEnemyPeriod = 1;
+			if (timeSpawnFlyEnemyPeriod <= minTimeSpawnFly) timeSpawnFlyEnemyPeriod = minTimeSpawnFly;
 			Instantiate(flyEnemySpawn, transform.position + offsetFlyEnemySpawn, Quaternion.identity);
 			timeSpawnFlyEnemy = 0;
 		}
 
 		if (timeSpawnWalkEnemy > timeSpawnWalkEnemyPeriod) {
-			timeSpawnWalkEnemyPeriod -= 0.07f;
-			if (timeSpawnWalkEnemyPeriod <= 1.5f) timeSpawnWalkEnemyPeriod = 1.5f;
+			timeSpawnWalkEnemyPeriod -= 0.05f;
+			if (timeSpawnWalkEnemyPeriod <= minTimeSpawnWalk) timeSpawnWalkEnemyPeriod = minTimeSpawnWalk;
 
 			Instantiate(walkEnemySpawn, transform.position + offsetWalkEnemySpawn, Quaternion.identity);
 			timeSpawnWalkEnemy = 0;
@@ -79,7 +84,7 @@ public class GameBalance : MonoBehaviour {
 			timeSpawnFire = 0;
 			numSpawnFire++;
 
-			if (numSpawnFire % 3 == 0 && numSpawnFire != 9) {
+			if (numSpawnFire % 3 == 0 && numSpawnFire != 15) {
 				int r = Random.Range(1, 4);
 				if (r == 1) SpawnHPItem();
 					else if (r == 2) SpawnSpecial();
@@ -87,7 +92,7 @@ public class GameBalance : MonoBehaviour {
 
 //				numSpawnFire = 0;
 			} else 
-				if (numSpawnFire == 9) {
+				if (numSpawnFire == 15) {
 					SpawnUp();
 					numSpawnFire = 0;
 				} else {

@@ -12,7 +12,7 @@ public class HPItem : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		string tag = other.gameObject.tag;
 		if (tag == "Player") {
-			
+			SoundManager.instance.PlaySingleByName(GameConst.PICKUP_AUDIO);
 			hpController.IncreaseProcess(40);
 			Destroy(gameObject);
 		}

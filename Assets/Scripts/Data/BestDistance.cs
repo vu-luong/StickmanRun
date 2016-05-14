@@ -16,6 +16,7 @@ public class BestDistance : MonoBehaviour {
 		if (bestDistance < runResult) {
 			bestDistance = runResult;
 			DataPref.setNumData(GameConst.BEST_DISTANCE_KEY, bestDistance);
+			if (bestDistance >= 50000) DataPref.setNumData(GameConst.IS_WIN_KEY, 1);
 		}
 
 		if (!GameConst.IS_TEST) {

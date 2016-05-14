@@ -28,6 +28,7 @@ public class BuyUpController : BuyController {
 	#region implemented abstract members of BuyController
 
 	protected override void BuyCompleted () {
+		SoundManager.instance.AnalyticReport("Shop", "buy Up");
 		ItemData.AddUp(1);
 		DataPref.addNumData(GameConst.NUM_COLLECT_KEY, -GameConst.UP_COST);
 	}
