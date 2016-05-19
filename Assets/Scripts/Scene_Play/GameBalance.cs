@@ -64,14 +64,18 @@ public class GameBalance : MonoBehaviour {
 		timeSpawnWalkEnemy = timeSpawnWalkEnemy + Time.deltaTime;
 
 		if (timeSpawnFlyEnemy > timeSpawnFlyEnemyPeriod) {
-			timeSpawnFlyEnemyPeriod -= 0.05f;
+			if (timeSpawnFlyEnemy < 2) timeSpawnFlyEnemyPeriod -= 0.014f;
+			else timeSpawnFlyEnemyPeriod -= 0.05f;
+
 			if (timeSpawnFlyEnemyPeriod <= minTimeSpawnFly) timeSpawnFlyEnemyPeriod = minTimeSpawnFly;
 			Instantiate(flyEnemySpawn, transform.position + offsetFlyEnemySpawn, Quaternion.identity);
 			timeSpawnFlyEnemy = 0;
 		}
 
 		if (timeSpawnWalkEnemy > timeSpawnWalkEnemyPeriod) {
-			timeSpawnWalkEnemyPeriod -= 0.05f;
+			if (timeSpawnWalkEnemy < 2) timeSpawnWalkEnemyPeriod -= 0.014f;
+			else timeSpawnWalkEnemyPeriod -= 0.05f;
+				
 			if (timeSpawnWalkEnemyPeriod <= minTimeSpawnWalk) timeSpawnWalkEnemyPeriod = minTimeSpawnWalk;
 
 			Instantiate(walkEnemySpawn, transform.position + offsetWalkEnemySpawn, Quaternion.identity);

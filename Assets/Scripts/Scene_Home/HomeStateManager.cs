@@ -89,7 +89,7 @@ public class HomeStateManager : MonoBehaviour {
 		string appStoreLink = "https://play.google.com/store/apps/details?id=com.zitga.TowerDefense";
 		string facebookshare = "https://www.facebook.com/sharer/sharer.php?u=" + Uri.EscapeUriString(appStoreLink);
 		SoundManager.instance.Vibrate();
-		Application.OpenURL(facebookshare);
+//		Application.OpenURL(facebookshare);
 
 	}
 

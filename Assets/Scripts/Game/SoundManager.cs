@@ -8,6 +8,7 @@ using GoogleMobileAds.Api;
 public class SoundManager : MonoBehaviour {
 
 	public AudioSource efxSource;                   //Drag a reference to the audio source which will play the sound effects.
+	public AudioSource efxSource2;
 	public AudioSource homeMusicSource;                 //Drag a reference to the audio source which will play the music.
 	public AudioSource storyMusicSource;
 	public AudioSource playMusicSource;
@@ -102,10 +103,20 @@ public class SoundManager : MonoBehaviour {
 	{
 		if (DataPref.getNumData(GameConst.SOUND_KEY) == 1) return;
 		//Set the clip of our efxSource audio source to the clip passed in as a parameter.
-		efxSource.loop = false;
-		efxSource.clip = map[name];
-		//Play the clip.
-		efxSource.Play ();
+
+		if (!efxSource.isPlaying) {
+			efxSource.loop = false;
+			efxSource.clip = map[name];
+			//Play the clip.
+			efxSource.Play ();
+		} else {
+			efxSource2.loop = false;
+			efxSource2.clip = map[name];
+			//Play the clip.
+			efxSource2.Play ();
+		}
+
+
 	}
 
 	//Used to play single sound clips.
@@ -113,14 +124,22 @@ public class SoundManager : MonoBehaviour {
 	{
 		if (DataPref.getNumData(GameConst.SOUND_KEY) == 1) return;
 		//Set the clip of our efxSource audio source to the clip passed in as a parameter.
-		efxSource.clip = map[name];
-		efxSource.loop = true;
-		//Play the clip.
-		efxSource.Play ();
+		if (!efxSource.isPlaying) {
+			efxSource.clip = map[name];
+			efxSource.loop = true;
+			//Play the clip.
+			efxSource.Play ();
+		} else {
+			efxSource2.clip = map[name];
+			efxSource2.loop = true;
+			//Play the clip.
+			efxSource2.Play ();
+		}
 	}
 
 	public void StopSingleLoop() {
 		if (efxSource != null && efxSource.isPlaying) efxSource.Stop();
+		if (efxSource2 != null && efxSource2.isPlaying) efxSource2.Stop();
 	}
 
 	//Used to play single sound clips.

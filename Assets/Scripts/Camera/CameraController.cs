@@ -64,10 +64,10 @@ public class CameraController : MonoBehaviour {
 			if (oldPositionY < positionY) oldPositionY += Time.deltaTime;
 			else oldPositionY -= Time.deltaTime;
 
-			transform.position = new Vector3(player.transform.position.x + DIS_PLAYER_CAM, oldPositionY + offsetY / 2, transform.position.z);
+			transform.position = new Vector3(player.transform.position.x + DIS_PLAYER_CAM, oldPositionY + offsetY / 3.5f, transform.position.z);
 		} else {
 			//2
-			transform.position = new Vector3(player.transform.position.x + DIS_PLAYER_CAM, positionY + offsetY / 2, transform.position.z);
+			transform.position = new Vector3(player.transform.position.x + DIS_PLAYER_CAM, positionY + offsetY / 3.5f, transform.position.z);
 		}
 	}
 

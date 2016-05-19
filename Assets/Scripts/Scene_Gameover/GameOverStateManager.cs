@@ -15,6 +15,8 @@ public class GameOverStateManager : MonoBehaviour {
 	}
 
 	public void gotoHomeScene() {
+		SoundManager.instance.StopSingleLoop();
+
 		SoundManager.instance.AnalyticReport(sceneName, "Home button click");
 
 		SoundManager.instance.PlaySingleByName(GameConst.BUTTON_CLICK_AUDIO);
@@ -30,6 +32,7 @@ public class GameOverStateManager : MonoBehaviour {
 	}
 
 	public void gotoPlayScene() {
+		SoundManager.instance.StopSingleLoop();
 		SoundManager.instance.AnalyticReport(sceneName, "Replay button click");
 		SoundManager.instance.PlaySingleByName(GameConst.BUTTON_CLICK_AUDIO);
 		if (!GameConst.IS_TEST) {
