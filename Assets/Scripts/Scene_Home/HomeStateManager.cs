@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using System;
 //using admob;
+using Facebook.Unity;
 
 public class HomeStateManager : MonoBehaviour {
 	public GameObject shopCanvas;
@@ -14,6 +15,17 @@ public class HomeStateManager : MonoBehaviour {
 	private String sceneName = "Home Scene";
 
 	private static int gameCount;
+
+	void Awake() {
+		if (FB.IsInitialized) {
+			FB.ActivateApp();
+		} else {
+			//Handle FB.Init
+			FB.Init( () => {
+				FB.ActivateApp();
+			});
+		}
+	}
 
 	void Start() {
 		SoundManager.instance.PlayMusic(GameConst.HOME_MUSIC);
@@ -86,11 +98,27 @@ public class HomeStateManager : MonoBehaviour {
 	public void Share() {
 		SoundManager.instance.AnalyticReport(sceneName, "Share Button Click");
 
-		string appStoreLink = "https://play.google.com/store/apps/details?id=com.zitga.TowerDefense";
-		string facebookshare = "https://www.facebook.com/sharer/sharer.php?u=" + Uri.EscapeUriString(appStoreLink);
+//		string appStoreLink = "https://play.google.com/store/apps/details?id=com.zitga.TowerDefense";
+//		string facebookshare = "https://www.facebook.com/sharer/sharer.php?u=" + Uri.EscapeUriString(appStoreLink);
 		SoundManager.instance.Vibrate();
 //		Application.OpenURL(facebookshare);
 
+		FB.ShareLink(
+			new Uri("https://play.google.com/store/apps/details?id=com.zitga.stickman"),
+			callback: ShareCallback
+		);
+	}
+
+	private void ShareCallback (IShareResult result) {
+		if (result.Cancelled || !String.IsNullOrEmpty(result.Error)) {
+			Debug.Log("ShareLink Error: "+result.Error);
+		} else if (!String.IsNullOrEmpty(result.PostId)) {
+			// Print post identifier of the shared content
+			Debug.Log(result.PostId);
+		} else {
+			// Share succeeded without postID
+			Debug.Log("ShareLink success!");
+		}
 	}
 
 	public void GoToHelpScene() {
